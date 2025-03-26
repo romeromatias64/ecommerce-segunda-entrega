@@ -1,0 +1,130 @@
+.main-admin-container {
+    display: flex;
+    justify-content: space-between;
+    gap: .5rem;
+}
+
+.admin-form {
+    display: grid;
+    gap: 1rem;
+    width: 1000px;
+    margin: 68px 1rem;
+
+    .input-group {
+        display: flex;
+        flex-direction: column;
+        max-width: 960px;
+
+        label {
+            margin-bottom: .25rem;
+            font-size: 10px;
+            color: var(--main-color);
+        }
+
+        input,
+        textarea {
+            padding: .5rem;
+            border: 1px solid rgba(232, 171, 0, 0.418);
+            border-radius: .25rem;
+            color: #ddd;
+            resize: none;
+            background-color: var(--tertiary-color);
+        }
+
+    }
+
+    button {
+        padding: .5rem;
+        background-color: rgba(232, 171, 0, 0.7);
+        border: 1px solid rgba(232, 171, 0, 0.8);
+        border-radius: .25rem;
+        cursor: pointer;
+        color: #ddd;
+
+        &:hover {
+            background-color: var(--main-color);
+        }
+    }
+}
+
+
+.admin-table {
+
+    border-collapse: collapse;
+    margin: 60px 1px;
+    border: 2px solid var(--secondary-color);
+
+    tr {
+        >td {
+            padding: 8px;
+        }
+    }
+
+    th {
+        padding: .5rem 1rem;
+        background-color: var(--main-color);
+        color: white;
+        font-weight: 500;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: var(--secondary-color);
+    }
+
+    .image-cell {
+        text-align: center;
+
+        .table-image {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            background-color: var(--text-color);
+        }
+    }
+
+    .name-cell {
+        text-align: center;
+        font-weight: 500;
+    }
+
+    .price-cell {
+        text-align: center;
+    }
+
+    .tools-cell {
+        .icon-container {
+            display: flex;
+            gap: .5rem;
+
+            .btn {
+                display: flex;
+                background-color: royalblue;
+                border: none;
+                outline: none;
+                color: #fff;
+                padding: .25rem;
+                width: 20px;
+                text-align: center;
+                justify-content: center;
+
+                &:hover {
+                    background-color: rgb(52, 85, 181);
+                }
+            }
+
+            .delete {
+                background-color: red;
+
+                &:hover {
+                    background-color: rgb(164, 0, 0);
+                }
+
+            }
+        }
+    }
+}
+
+.table-responsive {
+    width: 100%;
+
+}

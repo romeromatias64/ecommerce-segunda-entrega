@@ -1,0 +1,315 @@
+.main-container {
+    flex-grow: 1;
+
+    .title {
+        border-bottom: solid 1px var(--main-color);
+        margin: 2rem auto;
+        text-align: center;
+        padding: .2rem;
+        width: 80%;
+
+        h1,
+        h2 {
+            font-weight: 300;
+        }
+    }
+
+    .subtitle {
+        font-family: 'Oswald';
+        font-weight: 300;
+        font-size: 2em;
+        padding: .5em;
+    }
+
+    .sect {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .products-sect {
+
+        .destacados {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            text-align: center;
+            gap: 1rem;
+            padding: 2rem;
+
+            .card-container {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 1.5rem;
+                padding: 0 1.5rem;
+
+                .card {
+                    width: 350px;
+                    max-width: 350px;
+                    font-size: 14px;
+                    padding: 12px;
+
+                    background-color: var(--secondary-color);
+                    position: relative;
+
+                    .card-link {
+                        position: absolute;
+                        top: 0;
+                        bottom: 0;
+                        left: 0;
+                        width: 100%;
+                    }
+
+                    .card-content {
+                        margin: auto;
+                        padding: 5px;
+                        display: flex;
+                        justify-content: center;
+                        height: 200px;
+                        width: 237px;
+                        background-color: var(--text-color);
+                        position: relative;
+
+                        .card-image {
+                            height: 100%;
+                        }
+
+                        .card-status {
+                            position: absolute;
+                            top: 5px;
+                            right: 5px;
+                            padding: 5px;
+                            border-radius: 4px;
+                        }
+
+                        .sale {
+                            background-color: var(--main-color);
+                        }
+
+                        .new {
+                            background-color: red;
+                        }
+                    }
+
+                    .card-info {
+                        padding: 5px;
+
+                        .card-title {
+                            padding-top: 12px;
+
+                        }
+
+                        .card-price {
+                            padding-top: 12px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.descuento {
+    text-decoration: line-through var(--main-color);
+    color: rgba(241, 241, 241, 0.6);
+}
+
+.info-sect {
+    background: url(https://i.imgur.com/r0H46ae.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+
+    .subtitle {
+        text-align: center;
+    }
+
+    .info {
+        background-color: rgba(0, 0, 0, 0.565);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .info-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+
+            .info-logo {
+                text-align: center;
+
+                .logo-title {
+                    font-family: 'Oswald';
+                    font-weight: 200;
+                    font-size: 2rem;
+                    margin-bottom: 1rem;
+                }
+
+                .logo-img {
+                    width: 200px;
+                }
+            }
+
+            .info-text {
+                padding: 1rem;
+
+                .btn-container {
+                    width: 100%;
+                    display: flex;
+
+                    .btn {
+                        background-color: var(--main-color);
+                        display: inline-block;
+                        width: 200px;
+                        padding: .5em;
+                        text-align: center;
+                        text-decoration: none;
+                        color: var(--text-color);
+                        margin: 16px auto 0;
+                        border-radius: 4px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.features-sect {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background-color: var(--tertiary-color);
+
+    .feature {
+        width: 100%;
+        height: 40vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: .5rem;
+
+        &:nth-child(even) {
+            background-color: var(--secondary-color);
+        }
+
+        .icon-container {
+            padding: 2rem;
+
+            .icon {
+                font-size: 2rem;
+            }
+        }
+
+        .text-container {
+            text-align: center;
+        }
+    }
+}
+
+@media screen and (width > 768px) {
+
+    .main-header {
+        justify-content: flex-start;
+
+        .user-info {
+            margin-left: auto;
+
+            .picture-container {
+                display: flex;
+            }
+        }
+
+        .logo {
+            margin: 0 .5rem;
+        }
+
+        .burger-container {
+            display: none;
+        }
+
+        .main-nav {
+            position: static;
+            width: auto;
+            height: auto;
+    
+            .nav-list {
+                display: flex;
+                padding: 0;
+                height: auto;
+
+                .submenu-container {
+                    .submenu {
+                        min-width: 140px;
+                        right: -140px;
+                        top: 1rem;
+                        background-color: var(--secondary-color);
+                    }
+                }
+    
+                .nav-item {
+                    display: flex;
+                    
+                    a.nav-link {
+                        display: flex !important;
+                        align-items: center;
+                        padding: 1rem 1.5rem;
+                    }
+                }
+            }
+        }
+    }
+
+    .main-container {
+
+        .products-sect {
+
+            .destacados {
+                display: flex;
+                flex-direction: column;
+                
+                .card-container {
+                    flex-direction: row;
+
+                }
+            }
+        }
+
+        .info-sect {
+            height: 60vh;
+
+            .info {
+
+                .info-container {
+                    flex-direction: row;
+                    justify-content: space-around;
+                    margin-bottom: 0;
+
+                    .info-text {
+                        width: 600px;
+                        font-size: 1.3rem;
+                    }
+                }
+            }
+        }
+    }
+    
+        .features-sect {
+            flex-direction: row;
+        }
+
+    .main-footer {
+        display: flex;
+
+        section {
+            flex: 1;
+            text-align: center;
+        }
+    }
+
+}

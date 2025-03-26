@@ -1,0 +1,180 @@
+.active {
+    background-color: var(--main-color);
+}
+
+.main-header {
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--secondary-color);
+    display: flex;
+    height: 60px;
+    justify-content: space-between;
+    align-items: center;
+
+    .input-burger {
+        display: none;
+        
+        &:checked {
+            ~ .main-nav {
+                left: 0 !important;
+            }
+
+            ~ .burger-container {
+                .burger {
+                    background-color: transparent;
+                }
+
+                .burger::before {
+                    top: 0;
+                    transform: rotate(45deg);
+                }
+
+                .burger::after {
+                    top: 0;
+                    transform: rotate(-45deg);
+                }
+            }
+        }
+    }
+
+    .burger-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+
+        .burger {
+            width: 26px;
+            height: 3px;
+            background-color: white;
+            position: relative;
+            cursor: pointer;
+
+            transition: transform .3s ease-in-out;
+        }
+
+        .burger::before, .burger::after {
+            content: '';
+            width: 26px;
+            height: 3px;
+            background-color: white;
+            transition: transform .3s ease-in-out;
+        }
+
+        .burger::before {
+            position: absolute;
+            top: -8px;
+        }
+
+        .burger::after {
+            position: absolute;
+            top: 8px;
+        }
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+
+        .nav-logo {
+            width: 45px;
+            height: 45px;
+        }
+    }
+    
+
+    .main-nav {
+        position: absolute;
+        width: 300px;
+        background-color: var(--secondary-color);
+        left: -300px;
+        top: 60px;
+        bottom: 0;
+        transition: left 0.3s ease-in-out;
+        height: calc(100vh - 60px);
+        z-index: 10;
+    
+        .nav-list {
+            padding: 2rem 0;
+
+            .submenu-container {
+                position: relative;
+
+                &:hover > .submenu {
+                    display: block;
+                }
+
+                .submenu {
+                    display: none;
+                    position: absolute;
+                    min-width: 180px;
+                    background-color: var(--background-color);
+                    top: 50px;
+                }
+            }
+    
+            .nav-item {
+    
+                .nav-link {
+                    display: inline-block;
+                    color: var(--text-color);
+                    text-decoration: none;
+                    padding: 1rem;
+                    width: 100%;
+                    transition: background-color 0.2s ease-out, color 0.2s ease-out;
+
+                    &:hover {
+                        background-color: var(--main-color);
+                        color: var(--secondary-color);
+                    }
+                }
+            }
+        }
+    }
+    
+    .user-info {
+        display: flex;
+
+        .cart-container {
+            display: flex;
+            align-items: center;
+            color: white;
+            padding: .5rem 1rem;
+            cursor: pointer;
+
+            .cart-icon {
+                font-size: 32px;
+                position: relative;
+                color: white; 
+
+                .cart-count {
+                    width: 16px;
+                    height: 16px;
+                    background-color: red;
+                    position: absolute;
+                    right: -6px;
+                    top: -6px;
+                    border-radius: 50%;
+                    font-size: 12px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+        }
+
+        .picture-container {
+            align-items: center;
+            padding: 0 .5rem;
+            cursor: pointer;
+
+            .user-picture {
+                width: 45px;
+                height: 45px;
+                object-fit: cover;
+            }
+        }
+    }
+}

@@ -1,0 +1,171 @@
+
+.banner-section {
+    width: 100%;
+    height: 500px;
+    padding-top: 60px;
+}
+
+.slider {
+    width: 100%;
+    height: 100%;
+    color: var(--text-color);
+    overflow: hidden;
+    position: relative;
+
+    input[type="radio"] {
+        display: none;
+    }
+
+    input:checked ~ .slider-content {
+        animation: none;
+    }
+
+    input:nth-child(1):checked ~ .slider-buttons label:nth-child(1), input:nth-child(2):checked ~ .slider-buttons label:nth-child(2), input:nth-child(3):checked ~ .slider-buttons label:nth-child(3) {
+        background-color: white;
+        scale: 1.2;
+
+        &::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, .25);
+            animation: pulse .75s;
+        }
+    }
+
+    input:nth-child(1):checked ~ .slider-content {
+        transform: translateX(0) !important;
+    }
+
+    input:nth-child(2):checked ~ .slider-content {
+        transform: translateX(-100vw) !important;
+    }
+
+    input:nth-child(3):checked ~ .slider-content {
+        transform: translateX(-200vw) !important;
+    }
+
+    .slider-buttons {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+        z-index: 1;
+
+        label {
+            position: relative;
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, .5);
+            cursor: pointer;
+            transition: background-color .15s ease-in-out, scale .15s ease-in-out;
+            border-radius: 50%;
+
+            &:hover {
+                background-color: rgba(255,255,255,.75);
+                scale: 1.2;
+            }
+        }
+    }
+
+    .slider-content {
+        width: 300vw;
+        display: flex;
+        height: 100%;
+        transition: transform 1s ease-in-out;
+        animation: slide 15s infinite;
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 300vw;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,.15) 65%, rgba(0,0,0,.75));
+        }
+        
+
+        .slider-link {
+            visibility: hidden;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            display: inline-block;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100%;
+            display: flex;
+        
+            .slider-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                position: relative;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 300vw;
+                    height: 100%;
+                    background: linear-gradient(to bottom, rgba(0,0,0,.15) 65%, rgba(0,0,0,.75));
+                }
+            }
+
+            .slider-logo {
+                position: absolute;
+                bottom: 0;
+                width: 500px;
+                color: white;
+            }
+        }
+    }
+}
+
+
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+    
+    27.5% {
+        transform: translateX(0);
+    }
+
+    35% {
+        transform: translateX(-100vw);
+    }
+
+    63% {
+        transform: translateX(-100vw);
+    }
+
+    70% {
+        transform: translateX(-200vw);
+    }
+
+    100% {
+        transform: translateX(-200vw);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.5);
+    }
+    100% {
+        transform: scale();
+    }
+}
