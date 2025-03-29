@@ -22,9 +22,9 @@ export default function Home() {
 				<section className="products-sect sect">
 					<div className="destacados">
 						<h2 className="subtitle">MAS VENDIDOS</h2>
-						<div className="card-container">
+						
 							<ProductsList addProduct={addProduct} />
-						</div>
+						
 					</div>
 				</section>
 				<section className="info-sect sect">

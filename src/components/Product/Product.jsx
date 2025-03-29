@@ -1,7 +1,8 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
+import './Product.css'
 
-export default function Product({ product  }) {
+export default function Product({ product }) {
 
 	const { addProduct } = useCart()
 
@@ -11,11 +12,14 @@ export default function Product({ product  }) {
 				<a className="card-link" href="" />
 				<div className="card-content">
 					<a className="card-link" href="">
+						<div className="img-container">
 						<img
 							className="card-image"
 							src={product.image}
 							alt="Fender Stratocaster"
 						/>
+
+						</div>
 					</a>
 					{/* <div className="card-status sale">Oferta</div> */}
 				</div>

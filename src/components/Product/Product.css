@@ -1,0 +1,61 @@
+.card {
+                    width: 350px;
+                    max-width: 350px;
+                    font-size: 14px;
+                    padding: 12px;
+
+                    background-color: var(--secondary-color);
+                    position: relative;
+
+                    .card-link {
+                        position: absolute;
+                        top: 0;
+                        bottom: 0;
+                        left: 0;
+                        width: 100%;
+                    }
+
+                    .card-content {
+                        margin: auto;
+                        padding: 5px;
+                        display: flex;
+                        justify-content: center;
+                        height: 200px;
+                        width: 237px;
+                        background-color: var(--text-color);
+                        position: relative;
+
+                        .card-image {
+                            height: 100%;
+                        }
+
+                        .card-status {
+                            position: absolute;
+                            top: 5px;
+                            right: 5px;
+                            padding: 5px;
+                            border-radius: 4px;
+                        }
+
+                        .sale {
+                            background-color: var(--main-color);
+                        }
+
+                        .new {
+                            background-color: red;
+                        }
+                    }
+
+                    .card-info {
+                        padding: 5px;
+
+                        .card-title {
+                            padding-top: 12px;
+
+                        }
+
+                        .card-price {
+                            padding-top: 12px;
+                        }
+                    }
+                }
