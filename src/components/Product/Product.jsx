@@ -25,7 +25,7 @@ export default function Product({ product }) {
 				</div>
 				<div className="card-info">
 					<h3 className="card-title">
-						{product.title}
+						{product.name}
 					</h3>
 					<div className="card-price">
 						{/* <span className="descuento">$1.818.960,00</span> $1.622.315,00 */}
