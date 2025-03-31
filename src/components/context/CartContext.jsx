@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 const CartContext = createContext();
 
@@ -13,6 +14,20 @@ export default function CartProvider({ children }) {
     const [ total, setTotal ] = useState(0) // Estado para contar el total de la compra
 
     const [ cart, setCart ] = useState([]) // Estado para guardar los productos en el carrito
+
+
+    // Inicializar el carrito desde localStorage al cargar la aplicación
+    useEffect(() => {
+        const storedCart = localStorage.getItem("cart");
+        if (storedCart) {
+            setCart(JSON.parse(storedCart));
+        }
+    }, []);
+
+    // Guardar el carrito en localStorage cada vez que cambie
+    useEffect(() => {
+        localStorage.setItem("cart", JSON.stringify(cart));
+    }, [cart]);
 
 
     useEffect(() => {
@@ -38,6 +53,8 @@ export default function CartProvider({ children }) {
     // Funcion para agregar productos al carrito
     function addProduct(product) {
 
+        console.log("producto recibido:", product)
+
         // Verificar si el producto ya está en el carrito
         const productInCart = cart.find((item) => item.id === product.id);
 
@@ -50,6 +67,13 @@ export default function CartProvider({ children }) {
 
             setCart([...cart]) // Actualizo el carrito
         }
+        Swal.fire({
+            title: "Producto agregado al carrito",
+            text: "Se agregó correctamente el producto al carrito.",
+            icon: "success",
+            theme: "dark",
+            confirmButtonColor:"orange"
+        })
     }
 
     // Funcion para eliminar productos del carrito
@@ -59,18 +83,42 @@ export default function CartProvider({ children }) {
         setCart(newCart)
     }
 
-    // Funcion para decrementar la cantidad de un producto
-    function decreaseQuantity(product) {
-        const productInCart = cart.find((item) => item.id === product.id)
-
-        if(productInCart.quantity > 1) {
-            productInCart.quantity -= 1;
-            setCart([...cart])
-        }
+    // Funcion para incrementar la cantidad de un producto
+    function increaseQuantity(id) {
+        setCart((prodInCart) =>
+            prodInCart.map((item) =>
+                item.id === id
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+            )
+        );
     }
 
+    // Funcion para decrementar la cantidad de un producto
+    function decreaseQuantity(id) {
+        setCart((prodInCart) =>
+            prodInCart.map((item) =>
+                item.id === id && item.quantity > 1
+                    ? { ...item, quantity: item.quantity - 1 }
+                    : item
+            )
+        );
+    }
+
+    function clearCart() {
+        setCart([]) // Vaciamos el carrito
+    }
+
+    function formatNumber(value) {
+		if (!value) return "";
+		return new Intl.NumberFormat("es-AR", {
+			minimumFractionDigits: 2,
+			maximumFractionDigits: 2,
+		}).format(value);
+	}
+
     return (
-        <CartContext.Provider value={{ cart, isOpen, toggleCart, count, setCount, total, addProduct, removeProduct, decreaseQuantity}}>
+        <CartContext.Provider value={{ cart, isOpen, toggleCart, count, setCount, total, addProduct, removeProduct, increaseQuantity, decreaseQuantity, clearCart, formatNumber}}>
             {children}
         </CartContext.Provider>
     )

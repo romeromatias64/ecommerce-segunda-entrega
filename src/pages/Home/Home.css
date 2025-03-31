@@ -238,7 +238,7 @@
             position: static;
             width: auto;
             height: auto;
-    
+
             .nav-list {
                 display: flex;
                 padding: 0;
@@ -252,10 +252,10 @@
                         background-color: var(--secondary-color);
                     }
                 }
-    
+
                 .nav-item {
                     display: flex;
-                    
+
                     a.nav-link {
                         display: flex !important;
                         align-items: center;
@@ -273,9 +273,12 @@
             .destacados {
                 display: flex;
                 flex-direction: column;
-                
+
                 .card-container {
-                    flex-direction: row;
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                    gap: 1.5rem;
+                    padding: 1rem;
 
                 }
             }
@@ -299,10 +302,10 @@
             }
         }
     }
-    
-        .features-sect {
-            flex-direction: row;
-        }
+
+    .features-sect {
+        flex-direction: row;
+    }
 
     .main-footer {
         display: flex;

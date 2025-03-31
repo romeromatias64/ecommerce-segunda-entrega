@@ -1,14 +1,13 @@
-import React, { useState } from "react";
 import { useCart } from "../../components/context/CartContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./Cart.css";
+import Swal from "sweetalert2";
 
-export default function Cart({ removeProduct, }) {
-	const { cart, total } = useCart();
+export default function Cart() {
+	const { cart, total, removeProduct, clearCart, increaseQuantity, decreaseQuantity, formatNumber } = useCart();
 
-    const { count, setCount} = useState([])
-
+	
 
 
 	return (
@@ -36,21 +35,24 @@ export default function Cart({ removeProduct, }) {
 								<tr key={product.id}>
 									<td>{product.id}</td>
 									<td>{product.name}</td>
-									<td>{product.price}</td>
+									<td>{formatNumber(product.price)}</td>
 									<td>
 										<div className="count-container">
 											<button
-												className="btn btn-count btn-minus" onClick={() => setCount((count) => (count -= 1))}>
+												className="btn btn-count btn-minus"
+												onClick={() => decreaseQuantity(product.id)}>
 												<FontAwesomeIcon icon={faMinus} />
 											</button>
 											{product.quantity}
-											<button className="btn btn-count btn-plus" onClick={() => setCount((count) => (count += 1))}>
-                                                <FontAwesomeIcon icon={faPlus} />
-                                            </button>
+											<button
+												className="btn btn-count btn-plus"
+												onClick={() => increaseQuantity(product.id)}>
+												<FontAwesomeIcon icon={faPlus} />
+											</button>
 										</div>
 									</td>
 
-									<td>{product.price * product.quantity}</td>
+									<td>{formatNumber(product.price * product.quantity)}</td>
 
 									<td>
 										<button
@@ -66,14 +68,35 @@ export default function Cart({ removeProduct, }) {
 					</tbody>
 					<tfoot>
 						<tr>
-							<td colSpan="5">TOTAL AR${total}</td>
+							<td colSpan="5">TOTAL AR${formatNumber(total)}</td>
 						</tr>
 					</tfoot>
 				</table>
 
 				<div className="cart-buttons">
 					<button className="btn">Finalizar Compra</button>
-					<button className="btn">Vaciar Carrito</button>
+					<button
+						className="btn"
+						onClick={() => {
+							Swal.fire({
+								title: "¿Estás seguro?",
+								text: "Esto vaciará todo el carrito. Esta acción no se puede deshacer.",
+								icon: "warning",
+								showCancelButton: true,
+								confirmButtonColor: "#F00",
+								cancelButtonColor: "#222",
+								confirmButtonText: "Sí, vaciar carrito",
+								cancelButtonText: "Cancelar",
+								reverseButtons: true,
+								theme: "dark"
+							}).then((result) => {
+								if (result.isConfirmed) {
+									clearCart(); // Vacía el carrito si el usuario confirma
+								}
+							});
+						}}>
+						Vaciar Carrito
+					</button>
 				</div>
 			</div>
 		</>

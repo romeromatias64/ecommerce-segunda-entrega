@@ -1,38 +1,40 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
-import './Product.css'
+import "./Product.css";
 
 export default function Product({ product }) {
-
-	const { addProduct } = useCart()
+	const { addProduct } = useCart();
 
 	return (
 		<>
 			<div className="card" key={product.id}>
+				{product.discount > 0 && (
+					<span className="card-status sale">-{product.discount}%</span>
+				)}
 				<a className="card-link" href="" />
 				<div className="card-content">
-					<a className="card-link" href="">
-						<div className="img-container">
+					<div className="img-container">
 						<img
 							className="card-image"
 							src={product.image}
-							alt="Fender Stratocaster"
+							alt={product.name}
 						/>
-
-						</div>
-					</a>
-					{/* <div className="card-status sale">Oferta</div> */}
+					</div>
 				</div>
 				<div className="card-info">
-					<h3 className="card-title">
-						{product.name}
-					</h3>
+					<h3 className="card-title">{product.name}</h3>
 					<div className="card-price">
-						{/* <span className="descuento">$1.818.960,00</span> $1.622.315,00 */}
-						{product.price}
+						<span className="original-price">${formatNumber(product.originalPrice)}</span>
+						<br />
+						<span className="discounted-price">${formatNumber(product.price)}</span>
 					</div>
 					<div className="card-buttons">
-						<button className="btn card-btn" onClick={() => addProduct(product)} >
+						<button
+							className="btn card-btn"
+							onClick={(e) => {
+								e.stopPropagation();
+								addProduct(product);
+							}}>
 							Añadir al carrito
 						</button>
 					</div>

@@ -50,3 +50,20 @@
         margin: 0 2px;
     }
 }
+
+.count-container {
+    border: 1px solid var(--tertiary-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .btn-minus {
+        border-radius: 2px 0 0 2px;
+        margin-right: 6px;
+    }
+
+    .btn-plus {
+        border-radius: 0 2px 2px 0;
+        margin-left: 6px;
+    }
+}

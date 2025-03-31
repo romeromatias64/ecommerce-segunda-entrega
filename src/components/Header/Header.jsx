@@ -9,8 +9,6 @@ export default function Header() {
 
 	const { cart, toggleCart } = useCart()
 
-	console.log(cart)
-
 	return (
         <>
 		<header className="main-header">
@@ -79,7 +77,7 @@ export default function Header() {
 				<div className="cart-container">
 					<div className="cart-icon" onClick={() => toggleCart()}>
 						<FontAwesomeIcon icon={faShoppingCart} />
-						<span className="cart-count">{cart.length}</span>
+						<span className="cart-count">{cart.reduce((total, product) => total + product.quantity, 0)}</span>
 					</div>
 				</div>
 				<div className="picture-container">

@@ -143,6 +143,8 @@
             color: white;
             padding: .5rem 1rem;
             cursor: pointer;
+            position: absolute;
+            right: 4.4rem;
 
             .cart-icon {
                 font-size: 32px;

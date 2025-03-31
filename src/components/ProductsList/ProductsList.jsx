@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import Product from "../Product/Product";
 import { useProducts } from "../context/ProductsContext";
 
+
 export default function ProductsList() {
 
     const { products, getProducts } = useProducts();

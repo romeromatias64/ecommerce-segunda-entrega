@@ -1,20 +1,25 @@
 .main-admin-container {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: space-around;
     gap: .5rem;
     margin-top: 1rem;
+    overflow: hidden;
 }
 
 .admin-form {
-    display: grid;
-    gap: 1rem;
-    width: 1000px;
-    margin: 68px 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 1rem;
+    align-items: center;
 
     .input-group {
         display: flex;
         flex-direction: column;
-        max-width: 960px;
+        max-width: 650px;
+        width: 650px;
+        margin: 1rem 0;
 
         label {
             margin-bottom: .25rem;
@@ -32,15 +37,29 @@
             background-color: var(--tertiary-color);
         }
 
+        .description {
+            height: 80px;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
     }
 
     button {
+        display: flex;
         padding: .5rem;
         background-color: rgba(232, 171, 0, 0.7);
         border: 1px solid rgba(232, 171, 0, 0.8);
         border-radius: .25rem;
         cursor: pointer;
         color: #ddd;
+        margin: 1rem 0;
+        max-width: 650px;
+
 
         &:hover {
             background-color: var(--main-color);
@@ -50,10 +69,12 @@
 
 
 .admin-table {
-
     border-collapse: collapse;
-    margin: 60px 1px;
+
     border: 2px solid var(--secondary-color);
+    width: 100%;
+    max-width: 100%;
+    
 
     tr {
         >td {
@@ -126,6 +147,37 @@
 }
 
 .table-responsive {
+    display: flex;
     width: 100%;
+    background-color: var(--tertiary-color);
+    overflow: hidden;
+    overflow-x: auto;
+    justify-content: center;
 
+}
+
+@media screen and (width < 950px) {
+
+
+    .admin-form {
+        width: 100%;
+
+        .input-group {
+            width: 300px;
+        }
+    }
+
+    .admin-table {
+        width: auto;
+        max-width: 100%;
+        height: 100%;
+    }
+
+}
+
+
+@media screen and (width < 550px) {
+    .table-responsive {
+        overflow-x: auto;
+    }
 }

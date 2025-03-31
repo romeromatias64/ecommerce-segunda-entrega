@@ -1,15 +1,31 @@
 import React, { useEffect, useState } from "react";
 import "./AdminProduct.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Swal from "sweetalert2";
+import ProductRow from "../../components/ProductRow/ProductRow";
 
 const URL = "https://67cb83383395520e6af589cc.mockapi.io";
 
-export default function AdminProduct({ products, setProducts }) {
-	
+export default function AdminProduct() {
+	const [products, setProducts] = useState([]);
+	const [editProduct, setEditProduct] = useState(null);
+
+	useEffect(() => {
+		getProducts();
+	}, []);
+
+	async function getProducts() {
+		try {
+			const response = await axios.get(`${URL}/products`);
+			const data = response.data;
+
+			setProducts(data);
+		} catch (error) {
+			console.log("Error al obtener los productos: ", error);
+		}
+	}
+
 	const {
 		register,
 		handleSubmit,
@@ -17,43 +33,47 @@ export default function AdminProduct({ products, setProducts }) {
 		setFocus,
 		reset,
 		formState: { errors, isValid },
-	} = useForm();
-
-	const [editProduct, setEditProduct] = useState(null);
-
-	// useEffect(() => {
-	// 	getProducts();
-	// }, []);
+	} = useForm({
+		mode: "onChange", // Valida mientras escribe el usuario
+	});
 
 	useEffect(() => {
-
-		if(editProduct) {
+		if (editProduct) {
 			setValue("name", editProduct.name);
 			setValue("description", editProduct.description);
 			setValue("price", editProduct.price);
+			setValue("discount", editProduct.discount);
 			setValue("image", editProduct.image);
 		} else {
-			reset()
+			reset();
 		}
-	}, [editProduct])
 
-	
+		document.getElementById("form").scrollIntoView({ behavior: "smooth" });
+	}, [editProduct]);
 
 	async function addProduct(data) {
 		try {
+			const discount = data.discount || 0;
+			const priceWithoutPoints = Number(data.price); // No se formatea aquí
+			const discountedPrice =
+				priceWithoutPoints - (priceWithoutPoints * discount) / 100; // Aplica el descuento
+
 			if (editProduct) {
-				const id = editProduct;
+				const id = editProduct.id;
 
 				const productToUpdate = {
 					name: data.name,
 					description: data.description,
-					price: data.price,
+					price: discountedPrice, // Precio sin formato
+					originalPrice: priceWithoutPoints, // Precio original sin formateo
+					discount: discount, // Porcentaje de descuento
 					image: data.image,
 				};
 
-				const response = await axios.put(`${URL}/products/${id}`, productToUpdate);
-
-				console.log(response.data)
+				const response = await axios.put(
+					`${URL}/products/${id}`,
+					productToUpdate
+				);
 
 				const productsCopy = [...products];
 				const index = productsCopy.findIndex((product) => product.id === id);
@@ -62,31 +82,44 @@ export default function AdminProduct({ products, setProducts }) {
 				setProducts(productsCopy);
 
 				setEditProduct(null);
+
+				Swal.fire(
+					"Producto actualizado",
+					"El producto se actualizó correctamente",
+					"success"
+				);
 			} else {
 				const newProduct = {
 					name: data.name,
 					description: data.description,
-					price: data.price,
+					price: discountedPrice, // Precio sin formato
+					originalPrice: priceWithoutPoints, // Precio original sin formateo
+					discount: discount, // Porcentaje de descuento
 					image: data.image,
 				};
 
 				const response = await axios.post(`${URL}/products`, newProduct);
 
 				setProducts([...products, response.data]);
-				console.log(products)
 
-				reset();
+				reset(); // Resetea el formulario
 
 				Swal.fire(
 					"Producto subido",
 					"Se ha subido correctamente el producto",
 					"success"
-				)
+				);
 			}
 
-			setFocus("name")
+			setFocus("name");
 		} catch (error) {
-			console.log(error);
+			console.error(error);
+
+			Swal.fire(
+				"Error",
+				"Hubo un problema al agregar o actualizar el producto",
+				"error"
+			);
 		}
 	}
 
@@ -95,7 +128,6 @@ export default function AdminProduct({ products, setProducts }) {
 	}
 
 	function deleteProduct(id) {
-		
 		try {
 			Swal.fire({
 				title: "¿Seguro que quieres eliminar este producto?",
@@ -106,38 +138,51 @@ export default function AdminProduct({ products, setProducts }) {
 				confirmButtonText: "Eliminar",
 				confirmButtonColor: "#F00",
 				cancelButtonColor: "#ccc",
-				reverseButtons: true
+				reverseButtons: true,
 			}).then(async (result) => {
-				if(result.isConfirmed) {
+				if (result.isConfirmed) {
 					await axios.delete(`${URL}/products/${id}`);
 
-					const productsWithoutDeleted = products.filter((product) => product.id !== id);
+					const productsWithoutDeleted = products.filter(
+						(product) => product.id !== id
+					);
 
 					setProducts(productsWithoutDeleted);
 
 					Swal.fire(
 						"Producto eliminado",
-						"el producto fue eliminado correctamente",
+						"El producto fue eliminado correctamente",
 						"success"
-					)
+					);
 				}
-			})
-			} catch(error) {
-				Swal.fire({
-					title: "No se pudo borrar el producto",
-					icon: "error",
-				})
-				console.error(error);
+			});
+		} catch (error) {
+			Swal.fire({
+				title: "No se pudo borrar el producto",
+				icon: "error",
+			});
+			console.error(error);
 		}
+	}
+
+	function formatNumber(value) {
+		if (!value) return "";
+		return new Intl.NumberFormat("es-AR", {
+			minimumFractionDigits: 2,
+			maximumFractionDigits: 2,
+		}).format(value);
 	}
 
 	return (
 		<>
 			<main className="main-admin-container">
-				<form className="admin-form" onSubmit={handleSubmit(addProduct)}>
+				<h1 className="title">Agregar un producto</h1>
+				<form
+					className="admin-form"
+					id="form"
+					onSubmit={handleSubmit(addProduct)}>
 					<div className="input-group">
 						<label htmlFor="name">Nombre del producto</label>
-
 						<input
 							type="text"
 							{...register("name", {
@@ -148,30 +193,92 @@ export default function AdminProduct({ products, setProducts }) {
 								},
 								maxLength: {
 									value: 50,
-									message: "El nombre excede la capacidad de caracteres (50).",
+									message: "El nombre excede el límite de 50 caracteres.",
 								},
 							})}
 							id="name"
 							placeholder="Escriba el nombre del producto"
 						/>
-
 						{errors.name && (
 							<span className="error">{errors.name.message}</span>
 						)}
 					</div>
+
 					<div className="input-group">
 						<label htmlFor="description">Descripción</label>
-						<textarea {...register("description")} id="description"></textarea>
+						<input
+							type="textarea" className="description"
+							{...register("description", {
+								required: "Se requiere la descripción del producto.",
+								minLength: {
+									value: 30,
+									message: "La descripción debe tener al menos 30 caracteres.",
+								},
+								maxLength: {
+									value: 250,
+									message: "La descripción excede el límite de 250 caracteres.",
+								},
+							})}
+							id="description"
+							placeholder="Escriba una descripción del producto"
+						/>
+						{errors.description && (
+							<span className="error">{errors.description.message}</span>
+						)}
 					</div>
+					
+					
 					<div className="input-group">
 						<label htmlFor="price">Precio</label>
-						<input type="number" {...register("price")} id="price" />
+						<input
+							type="number"
+							{...register("price", {
+								required: "Se requiere el precio del producto.",
+								validate: (value) => {
+									if (!/^\d+$/.test(value)) {
+										return "El precio debe ser un número válido.";
+									}
+									return true;
+								},
+							})}
+							id="price"
+							placeholder="Ingrese el precio del producto"
+						/>
+						{errors.price && (
+							<span className="error">{errors.price.message}</span>
+						)}
 					</div>
 					<div className="input-group">
-						<label htmlFor="image">URL de la imagen del producto</label>
-						<input type="url" {...register("image")} id="image" />
+						<label htmlFor="discount">Descuento (%)</label>
+						<input
+							type="number"
+							{...register("discount", {
+								required: "Se requiere el descuento.",
+								min: {
+									value: 0,
+									message: "El descuento no puede ser menor a 0.",
+								},
+								max: {
+									value: 100,
+									message: "El descuento no puede ser mayor a 100.",
+								},
+							})}
+							id="discount"
+							placeholder="Ingrese el porcentaje de descuento"
+						/>
+						{errors.discount && (
+							<span className="error">{errors.discount.message}</span>
+						)}
 					</div>
 
+					<div className="input-group">
+						<label htmlFor="image">Imagen</label>
+						<input type="url" {...register("image", {
+							required:"Se requiere la imagen del producto"
+						})} 
+						placeholder="Pegue el url de la imagen"	
+					/>
+					</div>
 					<button className="button" type="submit" disabled={!isValid}>
 						{editProduct ? "Actualizar Producto" : "Publicar Producto"}
 					</button>
@@ -187,33 +294,16 @@ export default function AdminProduct({ products, setProducts }) {
 								<th>PRECIO</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td className="image-cell">
-									<img src="https://i.imgur.com/BuYknWw.jpeg" alt="" className="table-image" />
-								</td>
-								<td className="name-cell">
-									Fender American Professional II Stratocaster
-								</td>
-								<td className="description-cell">
-									La American Professional II Stratocaster® HSS se basa en más
-									de sesenta años de innovación, inspiración y evolución para
-									satisfacer las demandas del guitarrista de hoy. ...
-								</td>
-								<td className="price-cell">
-									<span className="descuento">$1.818.960</span> $1.622.315
-								</td>
-								<td className="tools-cell">
-									<div className="icon-container">
-										<button className="btn" title="Editar" onClick={() => updateProduct()}>
-											<FontAwesomeIcon icon={faPencil} />
-										</button>
-										<button className="btn delete" title="Eliminar" onClick={() => deleteProduct()} >
-											<FontAwesomeIcon icon={faTrash} />
-										</button>
-									</div>
-								</td>
-							</tr>
+						<tbody className="product-rows">
+							{products.map((product) => (
+								<ProductRow
+									key={product.id}
+									product={product}
+									updateProduct={updateProduct}
+									deleteProduct={deleteProduct}
+									formatNumber={formatNumber}
+								/>
+							))}
 						</tbody>
 					</table>
 				</div>
