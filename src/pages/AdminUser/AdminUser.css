@@ -1,24 +1,25 @@
-.main-admin-container {
+.main-admin-user-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-around;
     gap: .5rem;
-    margin-top: 1rem;
+    margin-top: 68px;
     overflow: hidden;
+    flex-grow: 1;
 }
 
 .admin-form {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    margin: auto;
+    width: 50%;
+    margin: 0 1rem;
     align-items: center;
 
     .input-group {
         display: flex;
         flex-direction: column;
-        max-width: 650px;
-        width: 650px;
+        max-width: 500px;
+        width: 500px;
         margin: 1rem 0;
 
         label {
@@ -109,7 +110,7 @@
         font-weight: 500;
     }
 
-    .price-cell {
+    .email-cell, .creation-cell {
         text-align: center;
     }
 
@@ -157,6 +158,10 @@
 }
 
 @media screen and (width < 950px) {
+
+    .main-admin-user-container {
+        flex-direction: column;
+    }
 
 
     .admin-form {

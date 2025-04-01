@@ -83,10 +83,12 @@ export default function AdminProduct() {
 
 				setEditProduct(null);
 
-				Swal.fire(
-					"Producto actualizado",
-					"El producto se actualizó correctamente",
-					"success"
+				Swal.fire({
+					title: "Producto actualizado",
+					text: "El producto se actualizó correctamente",
+					icon: "success",
+					theme: "dark"
+				}
 				);
 			} else {
 				const newProduct = {
@@ -104,10 +106,12 @@ export default function AdminProduct() {
 
 				reset(); // Resetea el formulario
 
-				Swal.fire(
-					"Producto subido",
-					"Se ha subido correctamente el producto",
-					"success"
+				Swal.fire({
+					title: "Producto subido",
+					text: "Se ha subido correctamente el producto",
+					icon: "success",
+					theme: "dark"
+				}
 				);
 			}
 
@@ -115,10 +119,12 @@ export default function AdminProduct() {
 		} catch (error) {
 			console.error(error);
 
-			Swal.fire(
-				"Error",
-				"Hubo un problema al agregar o actualizar el producto",
-				"error"
+			Swal.fire( {
+				title: "Error",
+				text: "Hubo un problema al agregar o actualizar el producto",
+				icon: "error",
+				theme: "dark"
+			}
 			);
 		}
 	}
@@ -139,6 +145,7 @@ export default function AdminProduct() {
 				confirmButtonColor: "#F00",
 				cancelButtonColor: "#ccc",
 				reverseButtons: true,
+				theme: "dark"
 			}).then(async (result) => {
 				if (result.isConfirmed) {
 					await axios.delete(`${URL}/products/${id}`);
@@ -149,10 +156,12 @@ export default function AdminProduct() {
 
 					setProducts(productsWithoutDeleted);
 
-					Swal.fire(
-						"Producto eliminado",
-						"El producto fue eliminado correctamente",
-						"success"
+					Swal.fire({
+						title: "Producto eliminado",
+						text: "El producto fue eliminado correctamente",
+						icon: "success",
+						theme: "dark"
+					}
 					);
 				}
 			});
@@ -160,6 +169,7 @@ export default function AdminProduct() {
 			Swal.fire({
 				title: "No se pudo borrar el producto",
 				icon: "error",
+				theme: "dark"
 			});
 			console.error(error);
 		}

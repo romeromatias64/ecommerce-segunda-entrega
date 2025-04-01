@@ -20,7 +20,6 @@ export default function Contact() {
 								minLength={3}
 								placeholder="John"
 								pattern="[a-zA-Z ]+$"
-								autofocus=""
 							/>
 						</div>
 						<div className="inputs">
@@ -33,11 +32,11 @@ export default function Contact() {
 							/>
 						</div>
 						<div className="inputs">
-							<label htmlFor="mail">Correo</label>
+							<label htmlFor="email">Correo</label>
 							<input
-								id="mail"
-								type="mail"
-								name="mail"
+								id="email"
+								type="email"
+								name="email"
 								placeholder="johndoe24@gmail.com"
 							/>
 						</div>
@@ -56,7 +55,6 @@ export default function Contact() {
 						width={600}
 						height={450}
 						style={{ border: 0 }}
-						allowFullScreen=""
 						loading="lazy"
 						referrerPolicy="no-referrer-when-downgrade"
 					/>

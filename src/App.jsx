@@ -7,13 +7,18 @@ import AdminProduct from "./pages/AdminProduct/AdminProduct";
 import About from "./pages/About/About";
 import Register from "./pages/Register/Register";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
+import AdminUser from "./pages/AdminUser/AdminUser";
+import { useState } from "react";
 
 
 function App() {
+
+	const [users, setUsers] = useState([]); // Estado compartido
+
 	return (
 		<>
 			<Routes>
-				<Route path="/register" element={<Register />} />
+				<Route path="/register" element={<Register users={users} setUsers={setUsers} />} />
 
 				<Route path="/" element={<Main />}>
 
@@ -27,7 +32,7 @@ function App() {
 
 					<Route path="/admin-product" element={<AdminProduct />} />
 
-					<Route path="/admin-user" element={<h2>Administrador de usuarios</h2>} />
+					<Route path="/admin-user" element={<AdminUser users={users} setUsers={setUsers} />} />
 
 				</Route>
 			</Routes>

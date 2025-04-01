@@ -56,7 +56,7 @@
                 height: 50px;
                 margin: 2rem;
                 background-color: var(--main-color);
-                color: var(--background-color);
+                color: var(--text-color);
                 border-radius: 2px;
                 border: none;
                 font-size: 1.3rem;
