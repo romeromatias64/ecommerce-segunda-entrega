@@ -19,7 +19,7 @@
         color: #eeeeee;
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        max-width: 800px;
+        max-width: 700px;
         width: 100%;
         opacity: 0;
         transform: translateY(-30px);
@@ -33,7 +33,7 @@
             margin-bottom: 1rem;
             display: flex;
             justify-content: space-between;
-
+            
             .btn-danger {
                 background-color: red;
                 color: white;

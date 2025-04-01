@@ -206,8 +206,8 @@ export default function AdminProduct() {
 
 					<div className="input-group">
 						<label htmlFor="description">Descripción</label>
-						<input
-							type="textarea" className="description"
+						<textarea
+							className="description"
 							{...register("description", {
 								required: "Se requiere la descripción del producto.",
 								minLength: {
@@ -215,8 +215,8 @@ export default function AdminProduct() {
 									message: "La descripción debe tener al menos 30 caracteres.",
 								},
 								maxLength: {
-									value: 250,
-									message: "La descripción excede el límite de 250 caracteres.",
+									value: 900,
+									message: "La descripción excede el límite de 900 caracteres.",
 								},
 							})}
 							id="description"

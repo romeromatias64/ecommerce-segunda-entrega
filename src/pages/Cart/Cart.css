@@ -1,6 +1,9 @@
+.table-container {
+    overflow: auto;
+}
+
 .cart-table {
     width: 100%;
-    max-width: 900px;
     border-collapse: collapse;
     margin: 0 auto;
 

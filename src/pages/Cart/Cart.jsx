@@ -13,65 +13,67 @@ export default function Cart() {
 	return (
 		<>
 			<div className="cart-container">
-				<table className="cart-table">
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>Nombre</th>
-							<th>Precio</th>
-							<th>Cantidad</th>
-							<th>Total</th>
-						</tr>
-					</thead>
-					<tbody>
-						{cart.length === 0 ? (
+				<div className="table-container">
+					<table className="cart-table">
+						<thead>
 							<tr>
-								<td colSpan="5" style={{ textAlign: "center" }}>
-									<h2>El carrito está vacío</h2>
-								</td>
+								<th>ID</th>
+								<th>Nombre</th>
+								<th>Precio</th>
+								<th>Cantidad</th>
+								<th>Total</th>
 							</tr>
-						) : (
-							cart.map((product) => (
-								<tr key={product.id}>
-									<td>{product.id}</td>
-									<td>{product.name}</td>
-									<td>{formatNumber(product.price)}</td>
-									<td>
-										<div className="count-container">
-											<button
-												className="btn btn-count btn-minus"
-												onClick={() => decreaseQuantity(product.id)}>
-												<FontAwesomeIcon icon={faMinus} />
-											</button>
-											{product.quantity}
-											<button
-												className="btn btn-count btn-plus"
-												onClick={() => increaseQuantity(product.id)}>
-												<FontAwesomeIcon icon={faPlus} />
-											</button>
-										</div>
-									</td>
-
-									<td>{formatNumber(product.price * product.quantity)}</td>
-
-									<td>
-										<button
-											className="btn btn-danger"
-											onClick={() => removeProduct(product)}
-											title="Eliminar producto">
-											<FontAwesomeIcon icon={faTrash} />
-										</button>
+						</thead>
+						<tbody>
+							{cart.length === 0 ? (
+								<tr>
+									<td colSpan="5" style={{ textAlign: "center" }}>
+										<h2>El carrito está vacío</h2>
 									</td>
 								</tr>
-							))
-						)}
-					</tbody>
-					<tfoot>
-						<tr>
-							<td colSpan="5">TOTAL AR${formatNumber(total)}</td>
-						</tr>
-					</tfoot>
-				</table>
+							) : (
+								cart.map((product) => (
+									<tr key={product.id}>
+										<td>{product.id}</td>
+										<td>{product.name}</td>
+										<td>{formatNumber(product.price)}</td>
+										<td>
+											<div className="count-container">
+												<button
+													className="btn btn-count btn-minus"
+													onClick={() => decreaseQuantity(product.id)}>
+													<FontAwesomeIcon icon={faMinus} />
+												</button>
+												{product.quantity}
+												<button
+													className="btn btn-count btn-plus"
+													onClick={() => increaseQuantity(product.id)}>
+													<FontAwesomeIcon icon={faPlus} />
+												</button>
+											</div>
+										</td>
+
+										<td>{formatNumber(product.price * product.quantity)}</td>
+
+										<td>
+											<button
+												className="btn btn-danger"
+												onClick={() => removeProduct(product)}
+												title="Eliminar producto">
+												<FontAwesomeIcon icon={faTrash} />
+											</button>
+										</td>
+									</tr>
+								))
+							)}
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colSpan="5">TOTAL AR${formatNumber(total)}</td>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
 
 				<div className="cart-buttons">
 					<button className="btn">Finalizar Compra</button>

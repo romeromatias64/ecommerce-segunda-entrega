@@ -66,10 +66,20 @@ export default function Header() {
 							REGISTRARSE
 						</NavLink>
 					</li>
-					<li className="nav-item">
-						<NavLink to="/admin-product" className="nav-link">
-							ADMINISTRAR
-						</NavLink>
+					<li className="nav-item submenu-container">
+						<p className="nav-link">ADMINISTRAR</p>
+						<ul className="nav-list submenu">
+							<li className="nav-item submenu-item">
+								<NavLink to="/admin-product" className="nav-link">
+									PRODUCTOS
+								</NavLink>
+							</li>
+							<li className="nav-item submenu-item">
+								<NavLink to="/admin-user" className="nav-link">
+									USUARIOS
+								</NavLink>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</nav>

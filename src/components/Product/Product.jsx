@@ -1,9 +1,18 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
 import "./Product.css";
+import { Link } from "react-router";
 
 export default function Product({ product }) {
 	const { addProduct } = useCart();
+
+	function formatNumber(value) {
+		if (!value) return "";
+		return new Intl.NumberFormat("es-AR", {
+			minimumFractionDigits: 2,
+			maximumFractionDigits: 2,
+		}).format(value);
+	}
 
 	return (
 		<>
@@ -11,7 +20,7 @@ export default function Product({ product }) {
 				{product.discount > 0 && (
 					<span className="card-status sale">-{product.discount}%</span>
 				)}
-				<a className="card-link" href="" />
+				<Link to="/product-detail" className="card-link" product={product} />
 				<div className="card-content">
 					<div className="img-container">
 						<img
@@ -24,8 +33,9 @@ export default function Product({ product }) {
 				<div className="card-info">
 					<h3 className="card-title">{product.name}</h3>
 					<div className="card-price">
-						<span className="original-price">${formatNumber(product.originalPrice)}</span>
-						<br />
+					{product.discount > 0 && (<span className="original-price">${formatNumber(product.originalPrice)}</span>
+					)}
+					<br />
 						<span className="discounted-price">${formatNumber(product.price)}</span>
 					</div>
 					<div className="card-buttons">

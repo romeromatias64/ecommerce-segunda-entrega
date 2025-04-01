@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useCart } from "../../components/context/CartContext";
 import ProductsList from "../../components/ProductsList/ProductsList";
+import { Link } from "react-router";
 
 export default function Home() {
 
@@ -54,9 +55,7 @@ export default function Home() {
 									vos!
 								</p>
 								<div className="btn-container">
-									<a className="btn" href="/pages/about.html">
-										Ver más
-									</a>
+									<Link to="/about" className="btn">Ver más</Link>
 								</div>
 							</div>
 						</div>
