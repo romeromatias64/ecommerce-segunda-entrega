@@ -85,6 +85,8 @@ body {
 
     .main-container {
 
+        flex: 1;
+
         .products-sect {
 
             .destacados {

@@ -20,7 +20,7 @@ export default function Product({ product }) {
 				{product.discount > 0 && (
 					<span className="card-status sale">-{product.discount}%</span>
 				)}
-				<Link to="/product-detail" className="card-link" product={product} />
+				<Link to="/product-detail" className="card-link" state={{product}} />
 				<div className="card-content">
 					<div className="img-container">
 						<img

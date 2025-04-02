@@ -225,8 +225,8 @@ export default function AdminProduct() {
 									message: "La descripción debe tener al menos 30 caracteres.",
 								},
 								maxLength: {
-									value: 900,
-									message: "La descripción excede el límite de 900 caracteres.",
+									value: 1500,
+									message: "La descripción excede el límite de 1500 caracteres.",
 								},
 							})}
 							id="description"
