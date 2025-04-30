@@ -66,6 +66,11 @@ export default function Header() {
 							REGISTRARSE
 						</NavLink>
 					</li>
+					<li className="nav-item">
+						<NavLink to="/login" className="nav-link">
+							INICIAR SESION
+						</NavLink>
+					</li>
 					<li className="nav-item submenu-container">
 						<p className="nav-link">ADMINISTRAR</p>
 						<ul className="nav-list submenu">

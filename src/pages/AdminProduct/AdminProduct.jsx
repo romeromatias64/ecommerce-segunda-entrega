@@ -283,7 +283,7 @@ export default function AdminProduct() {
 
 					<div className="input-group">
 						<label htmlFor="image">Imagen</label>
-						<input type="url" {...register("image", {
+						<input type="file" accept="image/*" {...register("image", {
 							required:"Se requiere la imagen del producto"
 						})} 
 						placeholder="Pegue el url de la imagen"	

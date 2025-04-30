@@ -3,9 +3,9 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const ProductsContext = createContext();
 
-export const useProducts = () => useContext(ProductsContext);  // Nombre corregido
+export const useProducts = () => useContext(ProductsContext);
 
-const URL = "https://67cb83383395520e6af589cc.mockapi.io";
+const URL = import.meta.env.VITE_API_URL;  // URL corregido
 
 export default function ProductsProvider({ children }) {
     const [products, setProducts] = useState([]);

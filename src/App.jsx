@@ -9,6 +9,7 @@ import Register from "./pages/Register/Register";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import AdminUser from "./pages/AdminUser/AdminUser";
 import { useState } from "react";
+import Login from "./pages/Login/Login";
 
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
 		<>
 			<Routes>
 				<Route path="/register" element={<Register users={users} setUsers={setUsers} />} />
+
+				<Route path="/login" element={<Login />} />
 
 				<Route path="/" element={<Main />}>
 
