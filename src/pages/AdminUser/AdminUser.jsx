@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import UserRow from '../../components/UserRow/UserRow';
 
-const URL = "https://67cb83383395520e6af589cc.mockapi.io";
+const URL = import.meta.env.VITE_API_URL;
 
 export default function AdminUser({ users, setUsers }) {
 
@@ -53,7 +53,7 @@ export default function AdminUser({ users, setUsers }) {
 
     async function addUser(data) {
         if(editUser) {
-            const id = editUser.id;
+            const id = editUser._id;
 
             const userToUpdate = {
                 name: data.name,
@@ -272,7 +272,7 @@ export default function AdminUser({ users, setUsers }) {
                         </thead>
                         <tbody className='user-rows'>
                             {users.map((user) => (
-                                <UserRow key={user.id} user={user} updateUser={updateUser} deleteUser={deleteUser} />
+                                <UserRow key={user._id} user={user} updateUser={updateUser} deleteUser={deleteUser} />
                             ))}
                         </tbody>
                     </table>

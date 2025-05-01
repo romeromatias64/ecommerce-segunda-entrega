@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import Footer from '../../components/Footer/Footer'
 
-const URL = "https://67cb83383395520e6af589cc.mockapi.io";
+const URL = import.meta.env.VITE_API_URL;
 
 export default function Register({ users, setUsers }) {
 

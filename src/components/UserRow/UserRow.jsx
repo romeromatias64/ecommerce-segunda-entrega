@@ -23,7 +23,7 @@ export default function UserRow({ user, updateUser, deleteUser }) {
                         <button className='btn' title='Editar' onClick={() => updateUser(user)}>
                             <FontAwesomeIcon icon={faPencil} />
                         </button>
-                        <button className='btn delete' title='Eliminar' onClick={() => deleteUser(user.id)}>
+                        <button className='btn delete' title='Eliminar' onClick={() => deleteUser(user._id)}>
                             <FontAwesomeIcon icon={faTrash} />
                         </button>
                     </div>

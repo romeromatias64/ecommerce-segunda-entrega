@@ -5,7 +5,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import ProductRow from "../../components/ProductRow/ProductRow";
 
-const URL = "https://67cb83383395520e6af589cc.mockapi.io";
+const URL = import.meta.env.VITE_API_URL;
 
 export default function AdminProduct() {
 	const [products, setProducts] = useState([]);
@@ -59,7 +59,7 @@ export default function AdminProduct() {
 				priceWithoutPoints - (priceWithoutPoints * discount) / 100; // Aplica el descuento
 
 			if (editProduct) {
-				const id = editProduct.id;
+				const id = editProduct._id;
 
 				const productToUpdate = {
 					name: data.name,

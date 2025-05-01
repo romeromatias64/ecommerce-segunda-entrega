@@ -16,7 +16,7 @@ export default function Product({ product }) {
 
 	return (
 		<>
-			<div className="card" key={product.id}>
+			<div className="card" key={product._id}>
 				{product.discount > 0 && (
 					<span className="card-status sale">-{product.discount}%</span>
 				)}
