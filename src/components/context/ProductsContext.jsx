@@ -22,7 +22,7 @@ export default function ProductsProvider({ children }) {
 
             const productsWithFullImagePath = products.map(product => ({
                 ...product,
-                image: product.image ? `${URL}/${product.image.replace(/\\/g, '/')}` : null,
+                image: product.image ? `${URL}/uploads/products/${product.image.replace(/\\/g, '/')}` : null,
             }));
             
             setProducts(productsWithFullImagePath);
