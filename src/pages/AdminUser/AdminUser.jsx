@@ -65,7 +65,7 @@ export default function AdminUser({ users, setUsers }) {
             const response = await axios.put(`${URL}/users/${id}`, userToUpdate);
 
             const usersCopy = [...users];
-            const index = usersCopy.findIndex((user) => user.id === id);
+            const index = usersCopy.findIndex((user) => user._id === id);
             usersCopy[index] = response.data;
 
             setUsers(usersCopy);
