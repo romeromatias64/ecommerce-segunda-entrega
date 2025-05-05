@@ -17,6 +17,7 @@ export default function ProductsProvider({ children }) {
     async function getProducts() {
         try {
             const response = await axios.get(`${URL}/products`);
+            console.log("Respuesta de la API: ", response.data)
             const products = response.data.products;
 
             const productsWithFullImagePath = products.map(product => ({
@@ -26,7 +27,8 @@ export default function ProductsProvider({ children }) {
             
             setProducts(productsWithFullImagePath);
         } catch (error) {
-            console.log(error);
+            console.log("Error al obtener los productos:", error);
+            setProducts([]); // Establecer productos como vacío en caso de error
         }
     }
 

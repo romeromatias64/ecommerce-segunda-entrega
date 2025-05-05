@@ -32,6 +32,7 @@ export default function AdminUser({ users, setUsers }) {
 		try {
 			const response = await axios.get(`${URL}/users`);
 			const data = response.data.users;
+            console.log(data)
 			setUsers(data)
 		} catch (error) {
 			console.log("Error al obtener los usuarios: ", error);
