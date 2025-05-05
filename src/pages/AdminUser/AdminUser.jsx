@@ -31,7 +31,7 @@ export default function AdminUser({ users, setUsers }) {
     async function getUsers() {
 		try {
 			const response = await axios.get(`${URL}/users`);
-			const data = response.data;
+			const data = response.data.users;
 			setUsers(data)
 		} catch (error) {
 			console.log("Error al obtener los usuarios: ", error);
@@ -99,7 +99,7 @@ export default function AdminUser({ users, setUsers }) {
             try {
                 const response = await axios.post(`${URL}/users`, newUser);
     
-                setUsers([...users, response.data]);
+                setUsers([...users, response.data.users]);
     
                 reset();
     

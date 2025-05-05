@@ -17,7 +17,7 @@ export default function ProductsProvider({ children }) {
     async function getProducts() {
         try {
             const response = await axios.get(`${URL}/products`);  // Template string corregido
-            setProducts(response.data);
+            setProducts(response.data.products);
         } catch (error) {
             console.log(error);
         }
