@@ -78,7 +78,7 @@ export default function CartProvider({ children }) {
 
     // Funcion para eliminar productos del carrito
     function removeProduct(product) {
-        const newCart = cart.filter((item) => item.id !== product._id)
+        const newCart = cart.filter((item) => item.id !== product.id)
 
         setCart(newCart)
     }
