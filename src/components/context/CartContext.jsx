@@ -56,7 +56,7 @@ export default function CartProvider({ children }) {
         console.log("producto recibido:", product)
 
         // Verificar si el producto ya está en el carrito
-        const productInCart = cart.find((item) => item.id === product._id);
+        const productInCart = cart.find((item) => item.id === product.id);
 
         if(!productInCart) {
             product.quantity = 1; // Si no está, le asigno la cantidad 1
