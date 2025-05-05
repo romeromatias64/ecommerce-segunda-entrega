@@ -59,7 +59,7 @@ export default function AdminProduct() {
 				priceWithoutPoints - (priceWithoutPoints * discount) / 100; // Aplica el descuento
 
 			if (editProduct) {
-				const id = editProduct._id;
+				const id = editProduct.id;
 
 				const productToUpdate = {
 					name: data.name,
