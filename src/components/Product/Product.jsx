@@ -25,7 +25,7 @@ export default function Product({ product }) {
 					<div className="img-container">
 						<img
 							className="card-image"
-							src={product.image.split("/")[product.image.split("/").length - 1]}
+							src={"uploads/products/" + product.image.split("/")[product.image.split("/").length - 1]}
 							alt={product.name}
 						/>
 					</div>
