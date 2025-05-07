@@ -29,7 +29,7 @@ export default function ProductDetail() {
 					<div className="detail">
 						<img
 							className="image"
-							src={product.image}
+							src={"https://backend-ecommerce-73447.onrender.com/api/uploads/products/" + product.image.split("/")[product.image.split("/").length - 1]}
 							alt={product.name}
 						/>
 						<div className="detail-content">
