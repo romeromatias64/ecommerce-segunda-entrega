@@ -307,7 +307,7 @@ export default function AdminProduct() {
 						<tbody className="product-rows">
 							{products.map((product) => (
 								<ProductRow
-									key={product.id}
+									key={product._id}
 									product={product}
 									updateProduct={updateProduct}
 									deleteProduct={deleteProduct}

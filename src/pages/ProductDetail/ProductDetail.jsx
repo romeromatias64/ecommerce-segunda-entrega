@@ -3,7 +3,7 @@ import "./ProductDetail.css";
 import { useCart } from "../../components/context/CartContext";
 import { useLocation } from "react-router";
 
-const URL = import.meta.env.VITE_API_URL
+const URL = import.meta.env.VITE_API_URL;
 
 export default function ProductDetail() {
 	const { addProduct } = useCart();
@@ -31,7 +31,7 @@ export default function ProductDetail() {
 					<div className="detail">
 						<img
 							className="image"
-							src={URL + product.image.split("/")[product.image.split("/").length - 1]}
+							src={`${URL}/uploads/products/` + product.image.split("/")[product.image.split("/").length - 1]}
 							alt={product.name}
 						/>
 						<div className="detail-content">

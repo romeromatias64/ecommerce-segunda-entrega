@@ -25,7 +25,7 @@ export default function Product({ product }) {
 					<div className="img-container">
 						<img
 							className="card-image"
-							src={"https://backend-ecommerce-73447.onrender.com/api/uploads/products/" + product.image.split("/")[product.image.split("/").length - 1]}
+							src={`${URL}/uploads/products/` + product.image.split("/")[product.image.split("/").length - 1]}
 							alt={product.name}
 						/>
 					</div>

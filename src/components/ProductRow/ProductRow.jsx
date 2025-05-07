@@ -10,7 +10,7 @@ export default function ProductRow({ product, updateProduct, deleteProduct, form
 			<tr>
 				<td className="image-cell">
 					<img
-						src={URL + product.image.split("/")[product.image.split("/").length - 1]}
+						src={`${URL}/uploads/products/` + product.image.split("/")[product.image.split("/").length - 1]}
 						alt={product.name}
 						className="table-image"
 					/>
@@ -35,7 +35,7 @@ export default function ProductRow({ product, updateProduct, deleteProduct, form
 						<button
 							className="btn delete"
 							title="Eliminar"
-							onClick={() => deleteProduct(product.id)}>
+							onClick={() => deleteProduct(product._id)}>
 							<FontAwesomeIcon icon={faTrash} />
 						</button>
 					</div>
