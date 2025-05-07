@@ -3,6 +3,8 @@ import "./ProductDetail.css";
 import { useCart } from "../../components/context/CartContext";
 import { useLocation } from "react-router";
 
+const URL = import.meta.env.VITE_API_URL
+
 export default function ProductDetail() {
 	const { addProduct } = useCart();
 	const location = useLocation();
@@ -29,7 +31,7 @@ export default function ProductDetail() {
 					<div className="detail">
 						<img
 							className="image"
-							src={"https://backend-ecommerce-73447.onrender.com/api/uploads/products/" + product.image.split("/")[product.image.split("/").length - 1]}
+							src={URL + product.image.split("/")[product.image.split("/").length - 1]}
 							alt={product.name}
 						/>
 						<div className="detail-content">
