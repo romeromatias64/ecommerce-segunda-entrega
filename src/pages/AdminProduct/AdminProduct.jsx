@@ -59,7 +59,7 @@ export default function AdminProduct() {
 				priceWithoutPoints - (priceWithoutPoints * discount) / 100; // Aplica el descuento
 
 			if (editProduct) {
-				const id = editProduct.id;
+				const id = editProduct._id;
 
 				const productToUpdate = {
 					name: data.name,
@@ -151,7 +151,7 @@ export default function AdminProduct() {
 					await axios.delete(`${URL}/products/${id}`);
 
 					const productsWithoutDeleted = products.filter(
-						(product) => product.id !== id
+						(product) => product._id !== id
 					);
 
 					setProducts(productsWithoutDeleted);
