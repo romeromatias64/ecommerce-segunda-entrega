@@ -3,6 +3,8 @@ import { useCart } from "../context/CartContext";
 import "./Product.css";
 import { Link } from "react-router";
 
+const URL = import.meta.env.VITE_API_URL;
+
 export default function Product({ product }) {
 	const { addProduct } = useCart();
 
