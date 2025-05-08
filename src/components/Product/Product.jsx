@@ -1,7 +1,7 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
 import "./Product.css";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 const URL = import.meta.env.VITE_API_URL;
 
@@ -19,8 +19,8 @@ export default function Product({ product }) {
 	return (
 		<>
 			<div className="card" key={product._id}>
-				{product.discount > 0 && (
-					<span className="card-status sale">-{product.discount}%</span>
+				{product.discountPercentage > 0 && (
+					<span className="card-status sale">-{product.discountPercentage}%</span>
 				)}
 				<Link to="/product-detail" className="card-link" state={{product}} />
 				<div className="card-content">
@@ -35,7 +35,7 @@ export default function Product({ product }) {
 				<div className="card-info">
 					<h3 className="card-title">{product.name}</h3>
 					<div className="card-price">
-					{product.discount > 0 && (<span className="original-price">${formatNumber(product.originalPrice)}</span>
+					{product.discountPercentage > 0 && (<span className="original-price">${formatNumber(product.originalPrice)}</span>
 					)}
 					<br />
 						<span className="discounted-price">${formatNumber(product.price)}</span>
