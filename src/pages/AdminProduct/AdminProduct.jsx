@@ -53,79 +53,88 @@ export default function AdminProduct() {
 
 	async function addProduct(data) {
 		try {
-			const discount = data.discount || 0;
-			const priceWithoutPoints = Number(data.price); // No se formatea aquí
-			const discountedPrice =
-				priceWithoutPoints - (priceWithoutPoints * discount) / 100; // Aplica el descuento
+			const formData = new FormData();
 
+			// Calcular precios y descuento
+			const originalPrice = Number(data.price);
+			const discountPercentage = Number(data.discountPercentage) || 0;
+			const discountedPrice = originalPrice - (originalPrice * discountPercentage) / 100;
+
+			// Agregar campos al FormData
+			formData.append("name", data.name);
+			formData.append("description", data.description);
+			formData.append("originalPrice", originalPrice); // Precio original sin descuento
+			formData.append("discountPercentage", discountPercentage); // % de descuento
+			formData.append("price", discountedPrice); // Precio final con descuento
+			formData.append("category", data.category);
+
+			// Manejo de la imagen
+			if (data.image[0]) {
+				formData.append("image", data.image[0]);
+			} else if (editProduct) {
+				// Si estamos editando y no hay nueva imagen, mantener la existente
+				formData.append("image", editProduct.image);
+			}
+
+			// Enviar datos al backend
+			let response;
 			if (editProduct) {
-				const id = editProduct._id;
-
-				const productToUpdate = {
-					name: data.name,
-					description: data.description,
-					price: discountedPrice, // Precio sin formato
-					originalPrice: priceWithoutPoints, // Precio original sin formateo
-					discount: discount, // Porcentaje de descuento
-					image: data.image,
-				};
-
-				const response = await axios.put(
-					`${URL}/products/${id}`,
-					productToUpdate
-				);
-
-				const productsCopy = [...products];
-				const index = productsCopy.findIndex((product) => product._id === id);
-				productsCopy[index] = response.data;
-
-				setProducts(productsCopy);
-
-				setEditProduct(null);
-
-				Swal.fire({
-					title: "Producto actualizado",
-					text: "El producto se actualizó correctamente",
-					icon: "success",
-					theme: "dark"
-				}
+				// Actualizar producto existente
+				response = await axios.put(
+					`${URL}/products/${editProduct._id}`,
+					formData,
+					{
+						headers: {
+							"Content-Type": "multipart/form-data",
+						},
+					}
 				);
 			} else {
-				const newProduct = {
-					name: data.name,
-					description: data.description,
-					price: discountedPrice, // Precio sin formato
-					originalPrice: priceWithoutPoints, // Precio original sin formateo
-					discount: discount, // Porcentaje de descuento
-					image: data.image,
-				};
-
-				const response = await axios.post(`${URL}/products`, newProduct);
-
-				setProducts([...products, response.data]);
-
-				reset(); // Resetea el formulario
-
-				Swal.fire({
-					title: "Producto subido",
-					text: "Se ha subido correctamente el producto",
-					icon: "success",
-					theme: "dark"
-				}
-				);
+				// Crear nuevo producto
+				response = await axios.post(`${URL}/products`, formData, {
+					headers: {
+						"Content-Type": "multipart/form-data",
+					},
+				});
 			}
 
+			// Actualizar estado de productos
+			if (editProduct) {
+				const updatedProducts = products.map((product) =>
+					product._id === editProduct._id ? response.data.product : product
+				);
+				setProducts(updatedProducts);
+			} else {
+				setProducts([...products, response.data.product]);
+			}
+
+			// Resetear formulario y mostrar feedback
+			reset();
+			setEditProduct(null);
+			Swal.fire({
+				title: editProduct ? "¡Actualizado!" : "¡Creado!",
+				text: editProduct
+					? "El producto se actualizó correctamente"
+					: "Nuevo producto agregado",
+				icon: "success",
+				theme: "dark",
+			});
+
+			// Enfocar el campo "name" después de enviar
 			setFocus("name");
 		} catch (error) {
-			console.error(error);
+			console.error("Error al guardar:", error);
 
-			Swal.fire( {
+			// Mensaje de error detallado
+			const errorMessage =
+				error.response?.data?.message || "Error al comunicarse con el servidor";
+
+			Swal.fire({
 				title: "Error",
-				text: "Hubo un problema al agregar o actualizar el producto",
+				text: errorMessage,
 				icon: "error",
-				theme: "dark"
-			}
-			);
+				theme: "dark",
+			});
 		}
 	}
 
@@ -145,7 +154,7 @@ export default function AdminProduct() {
 				confirmButtonColor: "#F00",
 				cancelButtonColor: "#ccc",
 				reverseButtons: true,
-				theme: "dark"
+				theme: "dark",
 			}).then(async (result) => {
 				if (result.isConfirmed) {
 					await axios.delete(`${URL}/products/${id}`);
@@ -160,16 +169,15 @@ export default function AdminProduct() {
 						title: "Producto eliminado",
 						text: "El producto fue eliminado correctamente",
 						icon: "success",
-						theme: "dark"
-					}
-					);
+						theme: "dark",
+					});
 				}
 			});
 		} catch (error) {
 			Swal.fire({
 				title: "No se pudo borrar el producto",
 				icon: "error",
-				theme: "dark"
+				theme: "dark",
 			});
 			console.error(error);
 		}
@@ -226,7 +234,8 @@ export default function AdminProduct() {
 								},
 								maxLength: {
 									value: 1500,
-									message: "La descripción excede el límite de 1500 caracteres.",
+									message:
+										"La descripción excede el límite de 1500 caracteres.",
 								},
 							})}
 							id="description"
@@ -236,8 +245,7 @@ export default function AdminProduct() {
 							<span className="error">{errors.description.message}</span>
 						)}
 					</div>
-					
-					
+
 					<div className="input-group">
 						<label htmlFor="price">Precio</label>
 						<input
@@ -262,7 +270,7 @@ export default function AdminProduct() {
 						<label htmlFor="discount">Descuento (%)</label>
 						<input
 							type="number"
-							{...register("discount", {
+							{...register("discountPercentage", {
 								required: "Se requiere el descuento.",
 								min: {
 									value: 0,
@@ -273,35 +281,43 @@ export default function AdminProduct() {
 									message: "El descuento no puede ser mayor a 100.",
 								},
 							})}
-							id="discount"
+							id="discountPercentage"
 							placeholder="Ingrese el porcentaje de descuento"
 						/>
-						{errors.discount && (
-							<span className="error">{errors.discount.message}</span>
+						{errors.discountPercentage && (
+							<span className="error">{errors.discountPercentage.message}</span>
 						)}
 					</div>
 
 					<div className="input-group">
 						<label htmlFor="image">Imagen</label>
-						<input type="file" accept="image/*" {...register("image", {
-							required: !editProduct && "Se requiere una imagen para el producto." // Solo requerido si no se está editando
-						})} 
-						placeholder="Pegue el url de la imagen"	
-					/>
+						<input
+							type="file"
+							accept="image/*"
+							{...register("image", {
+								required:
+									!editProduct && "Se requiere una imagen para el producto.", // Solo requerido si no se está editando
+							})}
+							placeholder="Pegue el url de la imagen"
+						/>
 					</div>
 
 					<div className="input-group">
 						<label htmlFor="category">Categoría</label>
-						<select id="category" {...register("category", {
-							required: "El producto debe tener una categoría",
-							validate: (value) => {
-								if (value === "default") {
-									return "Seleccione una categoría válida.";
-								}
-								return true;
-							},
-						})}>
-							<option value="default" disabled>Seleccione una categoría</option>
+						<select
+							id="category"
+							{...register("category", {
+								required: "El producto debe tener una categoría",
+								validate: (value) => {
+									if (value === "default") {
+										return "Seleccione una categoría válida.";
+									}
+									return true;
+								},
+							})}>
+							<option value="default" disabled>
+								Seleccione una categoría
+							</option>
 							<option value="fender">Fender</option>
 							<option value="gibson">Gibson</option>
 							<option value="jackson">Jackson</option>
