@@ -76,7 +76,7 @@ export default function AdminProduct() {
 				);
 
 				const productsCopy = [...products];
-				const index = productsCopy.findIndex((product) => product.id === id);
+				const index = productsCopy.findIndex((product) => product._id === id);
 				productsCopy[index] = response.data;
 
 				setProducts(productsCopy);
@@ -284,7 +284,7 @@ export default function AdminProduct() {
 					<div className="input-group">
 						<label htmlFor="image">Imagen</label>
 						<input type="file" accept="image/*" {...register("image", {
-							required:"Se requiere la imagen del producto"
+							required: !editProduct && "Se requiere una imagen para el producto." // Solo requerido si no se está editando
 						})} 
 						placeholder="Pegue el url de la imagen"	
 					/>
