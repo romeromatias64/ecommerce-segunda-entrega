@@ -12,6 +12,44 @@
     position: relative;
     box-sizing: border-box;
     margin: auto;
+    border-radius: 8px;
+
+    .skeleton-loader {
+        width: 100%;
+        animation: shimmer 1.5s infinite linear;
+        background: linear-gradient(
+            to right,
+            #f0f0f0 0%,
+            #e0e0e0 50%,
+            #f0f0f0 100%
+        );
+        background-size: 200% 100%;
+        border-radius: 8px;
+    }
+
+    .skeleton-image {
+        height: 200px;
+        background: #ddd;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+
+    .skeleton-text {
+        height: 15px;
+        background: #eee;
+        margin-bottom: 8px;
+        border-radius: 4px;
+        width: 80%;
+    }
+
+    .skeleton-text.short {
+        width: 60%;
+    }
+
+    @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+    }
 
 
     .card-link {
