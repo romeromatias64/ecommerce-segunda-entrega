@@ -7,14 +7,15 @@ const URL = import.meta.env.VITE_API_URL;
 
 export default function Product({ product }) {
 	const { addProduct } = useCart();
-	const [ imageLoaded, setImageLoaded] = useState(false);
+	const [imageLoaded, setImageLoaded] = useState(false);
 
 	useEffect(() => {
 		const img = new Image();
-		img.src = `${URL}/uploads/products/` + product.image.split("/")[product.image.split("/").length - 1];
-		img.onload = () => setImageLoaded(true)
-
-	}, [product.image])
+		img.src =
+			`${URL}/uploads/products/` +
+			product.image.split("/")[product.image.split("/").length - 1];
+		img.onload = () => setImageLoaded(true);
+	}, [product.image]);
 
 	function formatNumber(value) {
 		if (!value) return "";
@@ -27,25 +28,29 @@ export default function Product({ product }) {
 	return (
 		<>
 			<div className="card" key={product._id}>
-				
-				<div style={{ display: imageLoaded ? "block" : "none"}}>
+				<div style={{ display: imageLoaded ? "block" : "none" }}>
 					{product.discountPercentage > 0 && (
-						<span className="card-status sale">-{product.discountPercentage}%</span>
+						<span className="card-status sale">
+							-{product.discountPercentage}%
+						</span>
 					)}
 				</div>
-				<Link to="/product-detail" className="card-link" state={{product}} />
+				<Link to="/product-detail" className="card-link" state={{ product }} />
 				<div className="card-content">
 					<div className="img-container">
-					{!imageLoaded && (
-					<div className="skeleton-loader">
-						<div className="skeleton-image"></div>
-						<div className="skeleton-text"></div>
-						<div className="skeleton-text-short"></div>
-					</div>
-				)}
+						{!imageLoaded && (
+							<div className="skeleton-loader">
+								<div className="skeleton-image"></div>
+								<div className="skeleton-text"></div>
+								<div className="skeleton-text-short"></div>
+							</div>
+						)}
 						<img
 							className="card-image"
-							src={`${URL}/uploads/products/` + product.image.split("/")[product.image.split("/").length - 1]}
+							src={
+								`${URL}/uploads/products/` +
+								product.image.split("/")[product.image.split("/").length - 1]
+							}
 							alt={product.name}
 							onLoad={() => setImageLoaded(true)}
 						/>
@@ -54,10 +59,15 @@ export default function Product({ product }) {
 				<div className="card-info">
 					<h3 className="card-title">{product.name}</h3>
 					<div className="card-price">
-					{product.discountPercentage > 0 && (<span className="original-price">${formatNumber(product.originalPrice)}</span>
-					)}
-					<br />
-						<span className="discounted-price">${formatNumber(product.price)}</span>
+						{product.discountPercentage > 0 && (
+							<span className="original-price">
+								${formatNumber(product.originalPrice)}
+							</span>
+						)}
+						<br />
+						<span className="discounted-price">
+							${formatNumber(product.price)}
+						</span>
 					</div>
 					<div className="card-buttons">
 						<button
