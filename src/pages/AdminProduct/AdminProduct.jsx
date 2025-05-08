@@ -194,7 +194,7 @@ export default function AdminProduct() {
 	return (
 		<>
 			<main className="main-admin-container">
-				<h1 className="title">Agregar un producto</h1>
+				<h1 className="title">Administración de productos</h1>
 				<form
 					className="admin-form"
 					id="form"
