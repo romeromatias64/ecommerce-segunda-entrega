@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React from 'react'
 import { useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
 
 const URL = import.meta.env.VITE_API_URL;
 
@@ -11,9 +12,15 @@ export default function Login() {
     const onSubmit = async (data) => {
         try {
             const response = await axios.post(`${URL}/login`, data)
-            console.log(response.data)
+            
+            // Guardar token y usuario en localStorage
+            localStorage.setItem("token", response.data.token)
+            localStorage.setItem("user", JSON.stringify(response.data.user))
+
+            // Redirigir a la página de inicio
+            window.location.href = "/home"
         } catch (error) {
-            console.log("Error al iniciar sesión: ", error);
+            Swal.fire("Error", error.response?.data?.message || "Credenciales invalidas", "error")
         }
     }
 

@@ -28,14 +28,6 @@ export default function Register({ users, setUsers }) {
 			avatar: data.avatar,
 			email: data.email,
 			password: data.password,
-			createdAt: new Date().toLocaleString("es-ES", {
-				year: "2-digit",
-				month: "2-digit",
-				day: "numeric",
-				hour: "2-digit",
-				minute: "2-digit",
-				second: "2-digit"
-			}),
 		};
 
 		try {

@@ -100,7 +100,7 @@ export default function AdminUser({ users, setUsers }) {
             try {
                 const response = await axios.post(`${URL}/users`, newUser);
     
-                setUsers([...users, response.data.users]);
+                setUsers([...users, response.data.user]);
     
                 reset();
     
@@ -149,7 +149,7 @@ export default function AdminUser({ users, setUsers }) {
 					await axios.delete(`${URL}/users/${id}`);
 
 					const usersWithoutDeleted = users.filter(
-						(user) => user.id !== id
+						(user) => user._id !== id
 					);
 
 					setUsers(usersWithoutDeleted);
