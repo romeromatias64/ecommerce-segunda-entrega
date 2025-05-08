@@ -27,13 +27,7 @@ export default function Product({ product }) {
 	return (
 		<>
 			<div className="card" key={product._id}>
-				{!imageLoaded && (
-					<div className="skeleton-loader">
-						<div className="skeleton-image"></div>
-						<div className="skeleton-text"></div>
-						<div className="skeleton-text-short"></div>
-					</div>
-				)}
+				
 				<div style={{ display: imageLoaded ? "block" : "none"}}>
 					{product.discountPercentage > 0 && (
 						<span className="card-status sale">-{product.discountPercentage}%</span>
@@ -42,6 +36,13 @@ export default function Product({ product }) {
 				<Link to="/product-detail" className="card-link" state={{product}} />
 				<div className="card-content">
 					<div className="img-container">
+					{!imageLoaded && (
+					<div className="skeleton-loader">
+						<div className="skeleton-image"></div>
+						<div className="skeleton-text"></div>
+						<div className="skeleton-text-short"></div>
+					</div>
+				)}
 						<img
 							className="card-image"
 							src={`${URL}/uploads/products/` + product.image.split("/")[product.image.split("/").length - 1]}

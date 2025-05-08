@@ -23,7 +23,6 @@ function App() {
 				/>
 				<Route path="/login" element={<Login />} />
 
-				{/* Ruta principal con Layout (Main) */}
 				<Route path="/" element={<Main />}>
 					<Route index element={<Home />} /> 
 					<Route path="home" element={<Home />} />
