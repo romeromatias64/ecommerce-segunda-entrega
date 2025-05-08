@@ -289,6 +289,24 @@ export default function AdminProduct() {
 						placeholder="Pegue el url de la imagen"	
 					/>
 					</div>
+
+					<div className="input-group">
+						<label htmlFor="category">Categoría</label>
+						<select id="category" {...register("category", {
+							required: "El producto debe tener una categoría",
+							validate: (value) => {
+								if (value === "default") {
+									return "Seleccione una categoría válida.";
+								}
+								return true;
+							},
+						})}>
+							<option value="default" disabled>Seleccione una categoría</option>
+							<option value="fender">Fender</option>
+							<option value="gibson">Gibson</option>
+							<option value="jackson">Jackson</option>
+						</select>
+					</div>
 					<button className="button" type="submit" disabled={!isValid}>
 						{editProduct ? "Actualizar Producto" : "Publicar Producto"}
 					</button>
