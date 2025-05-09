@@ -4,10 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { NavLink } from "react-router";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
 
 export default function Header() {
 
 	const { cart, toggleCart } = useCart()
+	const { user } = useAuth()
 
 	return (
         <>
@@ -88,8 +90,8 @@ export default function Header() {
 				<div className="picture-container submenu-container">
 					<img
 						className="user-picture"
-						src={"https://www.utqiagvik.us/wp-content/uploads/2022/08/pngwing.com_.png"}
-						alt="User avatar"
+						src={ user.avatar || "https://www.utqiagvik.us/wp-content/uploads/2022/08/pngwing.com_.png"}
+						alt={user ? user.name : "Invitado"}
 					/>
 					<ul className="nav-list submenu">
 						<li className="nav-item submenu-item">
