@@ -178,7 +178,7 @@
 
             }
 
-            .submenu {
+            .submenu-container {
                 display: none;
                 position: absolute;
                 right: 0;
@@ -186,6 +186,16 @@
                 background-color: var(--secondary-color);
                 min-width: 180px;
                 z-index: 1000;
+
+                .nav-item {
+                    display: flex;
+
+                    a.nav-link {
+                        display: flex !important;
+                        align-items: center;
+                        padding: 1rem 1.5rem;
+                    }
+                }
             }
 
             .user-picture {
@@ -255,24 +265,7 @@
 
             }
 
-            .submenu-container {
-                    .submenu {
-                        min-width: 140px;
-                        right: -140px;
-                        top: 1rem;
-                        background-color: var(--secondary-color);
-                    }
-                }
-
-                .nav-item {
-                    display: flex;
-
-                    a.nav-link {
-                        display: flex !important;
-                        align-items: center;
-                        padding: 1rem 1.5rem;
-                    }
-                }
+            
         }
     }
 }
