@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import "./Register.css";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 import Footer from '../../components/Footer/Footer'
+import ReactCrop from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
+
 
 const URL = import.meta.env.VITE_API_URL;
 
@@ -22,14 +25,61 @@ export default function Register({ users, setUsers }) {
 		mode: "onChange", // Valida mientras escribe el usuario
 	});
 
+	//? Preview del avatar
+	const [ previewSrc, setPreviewSrc ] = useState("");
+	const [ crop, setCrop ] = useState({ aspect: 1/1 });
+	const imageRef = useRef(null)
+
+
+	// Funcion para manejar la seleccion de la imagen
+	const handleFileChange = (e) => {
+		if(e.target.files && e.target.files[0]) {
+			const reader = new FileReader();
+			reader.onload = (e) => setPreviewSrc(e.target.result);
+			reader.readAsDataURL(e.target.files[0]);
+		}
+	};
+
+	// Funcion para obtener la imagen recortada
+	const getCroppedImage = () => {
+		const canvas = document.createElement("canvas");
+		const scaleX = imageRef.current.naturalWidth / imageRef.current.width;
+		const scaleY = imageRef.current.naturalHeight / imageRef.current.height;
+
+		canvas.width = crop.width * scaleX;
+		canvas.height = crop.height * scaleY;
+		const ctx = canvas.getContext("2d");
+		ctx.drawImage(
+			imageRef.current,
+			crop.x * scaleX,
+			crop.y * scaleY,
+			crop.width * scaleX,
+			crop.height * scaleY,
+			0,
+			0,
+			crop.width * scaleX,
+			crop.height * scaleY
+		);
+
+		return new Promise((resolve) => {
+			canvas.toBlob((blob) => {
+				resolve(blob);
+			}, "image/jpeg");
+		});
+	};
+
 	async function addUser(data) {
+		const blob = await getCroppedImage()
+		const file = new File([blob], "avatar.jpg", { type: "image/jpeg" });
+
+		
 		const formData = new FormData()
 		formData.append("name", data.name);
 		formData.append("email", data.email);
 		formData.append("password", data.password);
 
 		if(data.avatar && data.avatar[0]) {
-			formData.append("avatar", data.avatar[0])
+			formData.append("avatar", file)
 		} else {
 			Swal.fire(
 				"Error",
@@ -82,7 +132,7 @@ export default function Register({ users, setUsers }) {
 					<div className="register-form">
 						<form
 							className="formulario"
-							onSubmit={handleSubmit(addUser)} // Vincula el formulario con addUser
+							onSubmit={handleSubmit(addUser)}
 							encType="multipart/form-data"
 						>
 							<div className="inputs">
@@ -175,11 +225,29 @@ export default function Register({ users, setUsers }) {
 							<div className="inputs">
 								<label htmlFor="avatar">Foto de perfil</label>
 								<input type="file" {...register("avatar", {
-									required: "Se requiere una foto de perfil."
+									required: "Se requiere una foto de perfil.",
+									onChange: handleFileChange
 								})}
 								id="avatar"
 								accept="image/*" // Acepta solo imagenes
-								placeholder="URL de la imagen" />
+							/>
+
+							{previewSrc && (
+								<div className="crop-container">
+									<ReactCrop
+										crop={crop}
+										onChange={(c) => setCrop(c)}
+										aspect={1}
+									>
+										<img
+											ref={imageRef}
+											src={previewSrc}
+											alt="Previsualización de la imagen"
+											style={{ maxWidth: "300px" }}
+										/>
+									</ReactCrop>
+								</div>
+							)}
 							</div>
 							<button className="button" type="submit" disabled={!isValid}>
 								REGISTRARSE
