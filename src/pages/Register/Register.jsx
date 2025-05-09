@@ -17,21 +17,24 @@ export default function Register({ users, setUsers }) {
 		handleSubmit,
 		reset,
 		watch,
-		formState: { errors, isValid},
+		formState: { errors, isValid },
 	} = useForm({
 		mode: "onChange", // Valida mientras escribe el usuario
 	});
 
 	async function addUser(data) {
-		const newUser = {
-			name: data.name,
-			avatar: data.avatar,
-			email: data.email,
-			password: data.password,
-		};
+		const formData = new FormData()
+		formData.append("name", data.name);
+		formData.append("email", data.email);
+		formData.append("password", data.password);
+		formData.append("avatar", data.avatar[0]);
 
 		try {
-			const response = await axios.post(`${URL}/users`, newUser);
+			const response = await axios.post(`${URL}/users`, formData, {
+				headers: {
+					"Content-Type": "multipart/form-data" // Cabecera necesaria para enviar archivos
+				}
+			});
 
 			setUsers([...users, response.data]);
 
@@ -66,6 +69,7 @@ export default function Register({ users, setUsers }) {
 						<form
 							className="formulario"
 							onSubmit={handleSubmit(addUser)} // Vincula el formulario con addUser
+							encType="multipart/form-data"
 						>
 							<div className="inputs">
 								<label htmlFor="name">Nombre completo</label>
@@ -156,10 +160,11 @@ export default function Register({ users, setUsers }) {
 							</div>
 							<div className="inputs">
 								<label htmlFor="avatar">Foto de perfil</label>
-								<input type="url" {...register("avatar", {
+								<input type="file" {...register("avatar", {
 									required: "Se requiere una foto de perfil."
 								})}
 								id="avatar"
+								accept="image/*" // Acepta solo imagenes
 								placeholder="URL de la imagen" />
 							</div>
 							<button className="button" type="submit" disabled={!isValid}>
