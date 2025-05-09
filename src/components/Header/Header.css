@@ -193,6 +193,7 @@
                         display: inline-block;
                         color: var(--text-color);
                         text-decoration: none;
+                        list-style-type: none;
                         padding: 1rem;
                         width: 100%;
                         transition: background-color 0.2s ease-out, color 0.2s ease-out;
