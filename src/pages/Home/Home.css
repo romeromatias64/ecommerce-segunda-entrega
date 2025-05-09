@@ -59,7 +59,7 @@
     background: url(https://i.imgur.com/r0H46ae.png);
     background-repeat: no-repeat;
     background-size: cover;
-    width: 100%;
+    width: 100vw;
 
 
     .subtitle {
