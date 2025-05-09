@@ -48,7 +48,7 @@ export default function Register({ users, setUsers }) {
 				navigate("/home");
 			});
 		} catch (error) {
-			console.error("Error al registrar el usuario: ", error);
+			console.error("Error en el frontend: ", error.response.data);
 
 			Swal.fire(
 				"Error",
