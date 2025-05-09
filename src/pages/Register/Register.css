@@ -50,6 +50,24 @@
                 }
             }
 
+            .crop-container {
+                margin: 1rem 0;
+                border: 2px solid var(--secondary-color);
+                border-radius: 4px;
+                padding: 1rem;
+                background: white;
+            }
+
+            .ReactCrop__child-wrapper {
+                max-width: 100%;
+            }
+
+            .ReactCrop__crop-selection {
+                border: 2px solid var(--secondary-color);
+                box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+
+            }
+
             .btn {
                 display: block;
                 width: 360px;
