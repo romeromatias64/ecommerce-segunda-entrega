@@ -194,6 +194,23 @@
                 object-fit: cover;
             }
         }
+
+        .nav-item {
+    
+                .nav-link {
+                    display: inline-block;
+                    color: var(--text-color);
+                    text-decoration: none;
+                    padding: 1rem;
+                    width: 100%;
+                    transition: background-color 0.2s ease-out, color 0.2s ease-out;
+
+                    &:hover {
+                        background-color: var(--main-color);
+                        color: var(--secondary-color);
+                    }
+                }
+            }
     }
 }
 
@@ -248,11 +265,5 @@
                 }
             }
         }
-
-        /* .user-info {
-            .picture-container {
-        
-            }
-        } */
     }
 }
