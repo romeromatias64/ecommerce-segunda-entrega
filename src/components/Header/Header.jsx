@@ -6,6 +6,8 @@ import { NavLink } from "react-router";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 
+const URL = import.meta.env.VITE_API_URL
+
 export default function Header() {
 
 	const { cart, toggleCart } = useCart()
@@ -92,7 +94,11 @@ export default function Header() {
 				<div className="picture-container submenu-container">
 					<img
 						className="user-picture"
-						src={ user?.avatar || defaultAvatar}
+						src={
+							user?.avatar
+							? `${URL}/uploads/users/${user.avatar}`
+							: defaultAvatar
+						}
 						alt={user ? user.name : "Invitado"}
 					/>
 					<ul className="nav-list submenu">
