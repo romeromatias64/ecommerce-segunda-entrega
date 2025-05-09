@@ -254,6 +254,25 @@
                 right: 0;
 
             }
+
+            .submenu-container {
+                    .submenu {
+                        min-width: 140px;
+                        right: -140px;
+                        top: 1rem;
+                        background-color: var(--secondary-color);
+                    }
+                }
+
+                .nav-item {
+                    display: flex;
+
+                    a.nav-link {
+                        display: flex !important;
+                        align-items: center;
+                        padding: 1rem 1.5rem;
+                    }
+                }
         }
     }
 }
