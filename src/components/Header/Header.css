@@ -181,7 +181,7 @@
             .submenu-container {
                 display: none;
                 position: absolute;
-                left: 0;
+                right: 100px;
                 top: 100%;
                 background-color: var(--secondary-color);
                 min-width: 180px;
