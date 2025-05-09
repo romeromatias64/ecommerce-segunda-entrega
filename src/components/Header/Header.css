@@ -178,24 +178,14 @@
 
             }
 
-            .submenu-container {
+            .submenu {
                 display: none;
                 position: absolute;
-                right: 100px;
+                right: 0;
                 top: 100%;
                 background-color: var(--secondary-color);
                 min-width: 180px;
                 z-index: 1000;
-
-                .nav-item {
-                    display: flex;
-
-                    a.nav-link {
-                        display: flex !important;
-                        align-items: center;
-                        padding: 1rem 1.5rem;
-                    }
-                }
             }
 
             .user-picture {
@@ -262,10 +252,8 @@
         .user-info {
             .picture-container {
                 right: 0;
-
+                top: 50px;
             }
-
-            
         }
     }
 }
