@@ -48,8 +48,7 @@ export default function Product({ product }) {
 						<img
 							className="card-image"
 							src={
-								`${URL}/uploads/products/` +
-								product.image.split("/")[product.image.split("/").length - 1]
+								`${URL}/uploads/products/${product.image}`
 							}
 							alt={product.name}
 							onLoad={() => setImageLoaded(true)}
