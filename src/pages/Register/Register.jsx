@@ -27,7 +27,17 @@ export default function Register({ users, setUsers }) {
 		formData.append("name", data.name);
 		formData.append("email", data.email);
 		formData.append("password", data.password);
-		formData.append("avatar", data.avatar[0]);
+
+		if(data.avatar && data.avatar[0]) {
+			formData.append("avatar", data.avatar[0])
+		} else {
+			Swal.fire(
+				"Error",
+				"Debes seleccionar una foto de perfil.",
+				"error"
+			)
+			return
+		}
 
 		try {
 			const response = await axios.post(`${URL}/users`, formData, {
@@ -48,13 +58,17 @@ export default function Register({ users, setUsers }) {
 				navigate("/home");
 			});
 		} catch (error) {
-			console.error("Error en el frontend: ", error.response.data);
+			let errorMessage = "Hubo un problema al registrarte. Intentalo de nuevo"
 
-			Swal.fire(
-				"Error",
-				"Hubo un problema al registrarte. Intentalo nuevamente",
-				"error"
-			);
+			if (error.response) {
+				errorMessage = error.response.data.message || errorMessage;
+				console.error("Error en el backend: ", error.response.data);
+			} else if (error.request) {
+				console.error("No se recibió respuesta del servidor: ", error.request);
+			} else {
+				console.error("Error al configurar la solicitud: ", error.message);
+			}
+			Swal.fire("Error", errorMessage, "error");
 		}
 	}
 
