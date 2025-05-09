@@ -11,6 +11,8 @@ export default function Header() {
 	const { cart, toggleCart } = useCart()
 	const { user } = useAuth()
 
+	const defaultAvatar = "https://www.utqiagvik.us/wp-content/uploads/2022/08/pngwing.com_.png"
+
 	return (
         <>
 		<header className="main-header">
@@ -90,7 +92,7 @@ export default function Header() {
 				<div className="picture-container submenu-container">
 					<img
 						className="user-picture"
-						src={ user.avatar || "https://www.utqiagvik.us/wp-content/uploads/2022/08/pngwing.com_.png"}
+						src={ user?.avatar || defaultAvatar}
 						alt={user ? user.name : "Invitado"}
 					/>
 					<ul className="nav-list submenu">
