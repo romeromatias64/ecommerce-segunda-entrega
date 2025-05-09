@@ -61,16 +61,6 @@ export default function Header() {
 							ACERCA DE
 						</NavLink>
 					</li>
-					<li className="nav-item">
-						<NavLink to="/register" className="nav-link">
-							REGISTRARSE
-						</NavLink>
-					</li>
-					<li className="nav-item">
-						<NavLink to="/login" className="nav-link">
-							INICIAR SESION
-						</NavLink>
-					</li>
 					<li className="nav-item submenu-container">
 						<p className="nav-link">ADMINISTRAR</p>
 						<ul className="nav-list submenu">
@@ -95,12 +85,20 @@ export default function Header() {
 						<span className="cart-count">{cart.reduce((total, product) => total + product.quantity, 0)}</span>
 					</div>
 				</div>
-				<div className="picture-container">
+				<div className="picture-container submenu-container">
 					<img
 						className="user-picture"
-						src="https://www.utqiagvik.us/wp-content/uploads/2022/08/pngwing.com_.png"
+						src={"https://www.utqiagvik.us/wp-content/uploads/2022/08/pngwing.com_.png"}
 						alt="User avatar"
 					/>
+					<ul className="nav-list submenu">
+						<li className="nav-item submenu-item">
+							<NavLink to="/register" className="nav-link">Registrarse</NavLink>
+						</li>
+						<li className="nav-item submenu-item">
+							<NavLink to="/login" className="nav-link">Iniciar sesión</NavLink>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</header>

@@ -168,9 +168,25 @@
         }
 
         .picture-container {
+            position: relative;
             align-items: center;
             padding: 0 .5rem;
             cursor: pointer;
+
+            &:hover > .submenu {
+                display: block;
+
+            }
+
+            .submenu {
+                display: none;
+                position: absolute;
+                right: 0;
+                top: 100%;
+                background-color: var(--secondary-color);
+                min-width: 180px;
+                z-index: 1000;
+            }
 
             .user-picture {
                 width: 45px;
@@ -230,6 +246,13 @@
                         padding: 1rem 1.5rem;
                     }
                 }
+            }
+        }
+
+        .user-info {
+            .picture-container {
+                right: 0;
+                top: 50px;
             }
         }
     }

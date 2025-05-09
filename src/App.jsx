@@ -10,6 +10,7 @@ import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import AdminUser from "./pages/AdminUser/AdminUser";
 import { useState } from "react";
 import Login from "./pages/Login/Login";
+import ProtectedRoute from "./components/context/ProtectedRoute";
 
 function App() {
 	const [users, setUsers] = useState([]); // Estado compartido
@@ -29,11 +30,16 @@ function App() {
 					<Route path="product-detail" element={<ProductDetail />} />
 					<Route path="contact" element={<Contact />} />
 					<Route path="about" element={<About />} />
-					<Route path="admin-product" element={<AdminProduct />} />
-					<Route
-						path="admin-user"
-						element={<AdminUser users={users} setUsers={setUsers} />}
-					/>
+					<Route path="admin-product" element={
+						<ProtectedRoute allowedRoles={["admin"]}>
+							<AdminProduct />
+						</ProtectedRoute>
+					} />
+					<Route path="admin-user" element={
+						<ProtectedRoute allowedRoles={["admin"]}>
+							<AdminUser users={users} setUsers={setUsers} />
+						</ProtectedRoute>
+					} />
 				</Route>
 			</Routes>
 		</>

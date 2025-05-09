@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React from 'react'
+import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
+import { useAuth } from '../../components/context/AuthContext';
 import Swal from 'sweetalert2';
 
 const URL = import.meta.env.VITE_API_URL;
@@ -8,17 +10,15 @@ const URL = import.meta.env.VITE_API_URL;
 export default function Login() {
 
     const { register, handleSubmit, formState: { errors } } = useForm({mode: "onChange"});
+    const { login } = useAuth()
+    const navigate = useNavigate()
 
     const onSubmit = async (data) => {
         try {
             const response = await axios.post(`${URL}/login`, data)
-            
-            // Guardar token y usuario en localStorage
-            localStorage.setItem("token", response.data.token)
-            localStorage.setItem("user", JSON.stringify(response.data.user))
+            login(response.data.user, response.data.token);
 
-            // Redirigir a la página de inicio
-            window.location.href = "/home"
+            navigate("/home")
         } catch (error) {
             Swal.fire("Error", error.response?.data?.message || "Credenciales invalidas", "error")
         }
