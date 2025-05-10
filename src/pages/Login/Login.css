@@ -10,12 +10,12 @@
 
 
 
-    .login-form {
+    .login-container {
         display: flex;
         width: 100%;
         flex-grow: 1;
 
-        .formulario {
+        .login-form {
             height: 100%;
             width: 100%;
             padding: 1rem;
