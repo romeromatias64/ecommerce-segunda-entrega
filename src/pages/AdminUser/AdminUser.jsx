@@ -68,12 +68,12 @@ export default function AdminUser({ users, setUsers }) {
 
     }, [editUser])
 
-    async function addUser(data) {
+    async function addUser(userData) {
         try {
             if(editUser) {
                 const response = await axios.put(
                     `${URL}/users/${editUser._id}`,
-                    data,
+                    userData,
                     getAuthHeaders()
                 );
 
@@ -86,7 +86,7 @@ export default function AdminUser({ users, setUsers }) {
             } else {
                 const response = await axios.post(
                     `${URL}/users`,
-                    data,
+                    userData,
                     getAuthHeaders()
                 );
                 
