@@ -128,11 +128,7 @@ export default function Header() {
 					<div className="picture-container submenu-container">
 						<img
 							className="user-picture"
-							src={
-								user?.avatar
-									? `${URL}/uploads/users/${user.avatar}`
-									: defaultAvatar
-							}
+							src={user?.avatar || defaultAvatar}
 							alt={user ? user.name : "Invitado"}
 						/>
 						<ul className="nav-list submenu">

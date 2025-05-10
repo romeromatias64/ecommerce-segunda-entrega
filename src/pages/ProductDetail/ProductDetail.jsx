@@ -31,7 +31,7 @@ export default function ProductDetail() {
 					<div className="detail">
 						<img
 							className="image"
-							src={`${URL}/uploads/products/` + product.image.split("/")[product.image.split("/").length - 1]}
+							src={product.image}
 							alt={product.name}
 						/>
 						<div className="detail-content">

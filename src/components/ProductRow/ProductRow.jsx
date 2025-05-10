@@ -10,7 +10,7 @@ export default function ProductRow({ product, updateProduct, deleteProduct, form
 			<tr>
 				<td className="image-cell">
 					<img
-						src={`${URL}/uploads/products/` + product.image.split("/")[product.image.split("/").length - 1]}
+						src={product.image}
 						alt={product.name}
 						className="table-image"
 					/>

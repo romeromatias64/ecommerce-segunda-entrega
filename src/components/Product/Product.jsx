@@ -11,9 +11,7 @@ export default function Product({ product }) {
 
 	useEffect(() => {
 		const img = new Image();
-		img.src =
-			`${URL}/uploads/products/` +
-			product.image.split("/")[product.image.split("/").length - 1];
+		img.src = product.image; // URL directa de S3
 		img.onload = () => setImageLoaded(true);
 	}, [product.image]);
 
@@ -47,9 +45,7 @@ export default function Product({ product }) {
 						)}
 						<img
 							className="card-image"
-							src={
-								`${URL}/uploads/products/${product.image}`
-							}
+							src={product.image}
 							alt={product.name}
 							onLoad={() => setImageLoaded(true)}
 						/>
