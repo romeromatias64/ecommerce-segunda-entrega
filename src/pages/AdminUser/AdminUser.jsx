@@ -9,7 +9,7 @@ import { useAuth } from '../../components/context/AuthContext';
 const URL = import.meta.env.VITE_API_URL;
 
 export default function AdminUser({ users, setUsers }) {
-    const { user: currentUser, logout  } = useAuth();
+    const { logout } = useAuth();
     const [editUser, setEditUser] = useState(null);
 
     const {
@@ -39,7 +39,8 @@ export default function AdminUser({ users, setUsers }) {
 
     async function getUsers() {
 		try {
-			const response = await axios.get(`${URL}/users`, getAuthHeaders());
+			const response = await axios.get(`${URL}/users?timestamp=${Date.now()}`, // Agregar un timestamp a la URL para evitar el caché
+                                                getAuthHeaders());
 
             if(!response.data?.users) {
                 setUsers([]);
@@ -86,10 +87,11 @@ export default function AdminUser({ users, setUsers }) {
                     getAuthHeaders()
                 );
 
-                const usersCopy = [...users];
-                const index = usersCopy.findIndex(u => u._id === editUser._id);
-                usersCopy[index] = response.data;
-                setUsers(usersCopy);
+                setUsers(prevUsers => {
+                    prevUsers.map(user =>
+                        user._id === editUser.id ? response.data.user : user
+                    )
+                })
 
                 Swal.fire("Usuario actualizado!", "", "success");
             } else {
@@ -99,12 +101,14 @@ export default function AdminUser({ users, setUsers }) {
                     getAuthHeaders()
                 );
                 
-                setUsers([...users, response.data.user]);
+                setUsers(prevUsers => [...prevUsers, response.data.user]);
                 Swal.fire("Usuario creado!", "", "success");
             }
             
             setEditUser(null);
             reset();
+
+            await getUsers();
         } catch (error) {
             console.error("Error:", error);
             Swal.fire({

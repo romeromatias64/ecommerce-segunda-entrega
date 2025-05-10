@@ -7,7 +7,13 @@ export default function UserRow({ user, updateUser, deleteUser }) {
         <>
             <tr>
                 <td className='image-cell'>
-                    <img src={user.avatar} alt={user.name} className='table-image' />
+                    <img 
+                        src={user.avatar} 
+                        alt={user.name} 
+                        className='table-image'
+                        onError={(e) => {
+                            e.target.src = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-978409_1280.png";
+                        }} />
                 </td>
                 <td className='name-cell'>
                     {user.name}
