@@ -87,7 +87,7 @@ export default function CartProvider({ children }) {
     function increaseQuantity(id) {
         setCart((prodInCart) =>
             prodInCart.map((item) =>
-                item.id === id
+                item._id === id
                     ? { ...item, quantity: item.quantity + 1 }
                     : item
             )
@@ -98,7 +98,7 @@ export default function CartProvider({ children }) {
     function decreaseQuantity(id) {
         setCart((prodInCart) =>
             prodInCart.map((item) =>
-                item.id === id && item.quantity > 1
+                item._id === id && item.quantity > 1
                     ? { ...item, quantity: item.quantity - 1 }
                     : item
             )
