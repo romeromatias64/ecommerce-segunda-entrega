@@ -5,6 +5,7 @@ import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
+import Swal from "sweetalert2";
 
 const URL = import.meta.env.VITE_API_URL
 
@@ -18,6 +19,10 @@ export default function Header() {
 
 	const handleLogout = () => {
 		logout()
+		Swal.fire({
+			title: "Sesión cerrada",
+			text: "Has cerrado sesión correctamente",
+		})
 		navigate("/home")
 	}
 
