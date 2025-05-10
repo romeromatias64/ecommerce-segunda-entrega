@@ -130,7 +130,10 @@ export default function Register({ users, setUsers }) {
 			const { user, token } = response.data;
 			
 			// Iniciar sesión automáticamente después de registrarse
-			login(user, token);
+			login({
+				...user,
+				avatar: user.avatar // URL de S3 desde el backend
+			}, token);
 			Swal.fire({
 				title: "Registro exitoso",
 				text: "Te has registrado correctamente.",
