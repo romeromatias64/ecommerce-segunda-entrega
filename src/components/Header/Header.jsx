@@ -8,14 +8,13 @@ import { useAuth } from "../context/AuthContext";
 import Swal from "sweetalert2";
 
 const URL = import.meta.env.VITE_API_URL;
+const defaultAvatar = "https://www.utqiagvik.us/wp-content/uploads/2022/08/pngwing.com_.png";
 
 export default function Header() {
 	const { cart, toggleCart } = useCart();
 	const { user, logout } = useAuth();
 	const navigate = useNavigate();
-
-	const defaultAvatar =
-		"https://www.utqiagvik.us/wp-content/uploads/2022/08/pngwing.com_.png";
+	
 
 	const handleLogout = async () => {
 		const result = await Swal.fire({
