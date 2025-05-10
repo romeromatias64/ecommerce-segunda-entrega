@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import UserRow from '../../components/UserRow/UserRow';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../components/context/AuthContext';
 
 const URL = import.meta.env.VITE_API_URL;
 
