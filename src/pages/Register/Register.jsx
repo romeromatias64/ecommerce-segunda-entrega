@@ -27,7 +27,7 @@ export default function Register({ users, setUsers }) {
 
 	//? Preview del avatar
 	const [ previewSrc, setPreviewSrc ] = useState("");
-	const [ crop, setCrop ] = useState({ aspect: 1/1 });
+	const [ crop, setCrop ] = useState({ aspect: 1/1, width: 50, height: 50, x: 0, y: 0 });
 	const imageRef = useRef(null)
 
 
@@ -42,6 +42,11 @@ export default function Register({ users, setUsers }) {
 
 	// Funcion para obtener la imagen recortada
 	const getCroppedImage = () => {
+
+		if(!imageRef.current || !crop.width || !crop.height) {
+			return Promise.reject("No hay imagen o recorte definido");
+		}
+
 		const canvas = document.createElement("canvas");
 		const scaleX = imageRef.current.naturalWidth / imageRef.current.width;
 		const scaleY = imageRef.current.naturalHeight / imageRef.current.height;
@@ -69,6 +74,13 @@ export default function Register({ users, setUsers }) {
 	};
 
 	async function addUser(data) {
+
+		if(!crop.width || !crop.height) {
+			Swal.fire("Error", "Por favor ajusta el recorte de la imagen", "error");
+			return;
+
+		}
+
 		const blob = await getCroppedImage()
 		const file = new File([blob], "avatar.jpg", { type: "image/jpeg" });
 
