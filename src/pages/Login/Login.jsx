@@ -18,8 +18,15 @@ export default function Login() {
         try {
             const response = await axios.post(`${URL}/login`, data)
             login(response.data.user, response.data.token);
-
-            navigate("/home")
+            Swal.fire({
+                title: "Bienvenido de nuevo",
+                text: `Hola ${response.data.user.name}, has iniciado sesión correctamente`,
+                icon: "success",
+                theme: "dark",
+            }).then(() => {
+                // Redirigir a la página de inicio después de cerrar el modal
+                navigate("/home");
+            });
         } catch (error) {
             Swal.fire("Error", error.response?.data?.message || "Credenciales invalidas", "error")
         }
