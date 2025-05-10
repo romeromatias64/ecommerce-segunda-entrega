@@ -52,6 +52,8 @@ export default function Cart() {
 				total: total,
 			};
 
+			console.log("Datos de la orden:", orderData);
+
 			// Obtener el token
 			const token =
 				localStorage.getItem("token") || sessionStorage.getItem("token");
