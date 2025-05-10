@@ -50,6 +50,10 @@ async function handleCheckout() {
             }
         });
 
+		if(!data.order || !data.order._id) {
+			throw new Error("La orden no se creó correctamente");
+		}
+
         // Éxito: Mostrar confirmación y vaciar carrito
         Swal.fire({
             title: "¡Orden creada!",
@@ -70,15 +74,10 @@ async function handleCheckout() {
 
     } catch (error) {
         const message = error.response?.data?.message || "Error al crear la orden";
-        Swal.fire({
-            title: "Error",
-            text: message,
-            icon: "error",
-            theme: "dark"
-        });
+		console.error(message);
 
         // Cerrar sesión si el token es inválido
-        if (error.response?.status === 401) logout();
+        if (error.response?.status === 401) logout();	
     }
 }
 
