@@ -12,7 +12,7 @@ export default function UserRow({ user, updateUser, deleteUser }) {
                         alt={user.name} 
                         className='table-image'
                         onError={(e) => {
-                            e.target.src = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-978409_1280.png";
+                            e.target.src = "https://www.utqiagvik.us/wp-content/uploads/2022/08/pngwing.com_.png";
                         }} />
                 </td>
                 <td className='name-cell'>

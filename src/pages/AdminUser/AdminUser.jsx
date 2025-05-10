@@ -9,7 +9,7 @@ import { useAuth } from '../../components/context/AuthContext';
 const URL = import.meta.env.VITE_API_URL;
 
 export default function AdminUser({ users, setUsers }) {
-    const { logout } = useAuth();
+    const { user: currentUser, logout } = useAuth();
     const [editUser, setEditUser] = useState(null);
 
     const {
@@ -27,7 +27,7 @@ export default function AdminUser({ users, setUsers }) {
             const token = localStorage.getItem("token") || sessionStorage.getItem("token");
             return {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${currentUser?.token}`,
                 }
             }
         }
@@ -264,7 +264,7 @@ export default function AdminUser({ users, setUsers }) {
                             </tr>
                         </thead>
                         <tbody className='user-rows'>
-                            {users.map((user) => (
+                            {users?.map((user) => (
                                 <UserRow key={user._id} user={user} updateUser={updateUser} deleteUser={deleteUser} />
                             ))}
                         </tbody>
