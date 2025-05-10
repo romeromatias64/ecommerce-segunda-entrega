@@ -53,19 +53,20 @@ export default function CartProvider({ children }) {
     // Funcion para agregar productos al carrito
     function addProduct(product) {
 
-        console.log("producto recibido:", product)
-
         // Verificar si el producto ya está en el carrito
         const productInCart = cart.find((item) => item._id === product._id);
 
         if(!productInCart) {
             product.quantity = 1; // Si no está, le asigno la cantidad 1
 
-            setCart([...cart, product]) // Agrego el producto al carrito
+            setCart([...cart, { ...product, quantity: 1}]) // Agrego el producto al carrito
         } else {
-            productInCart.quantity += 1; // Si ya está, incremento la cantidads
-
-            setCart([...cart]) // Actualizo el carrito
+            const updatedCart = cart.map((item) =>
+            item._id === product._id 
+                ? { ...item, quantity: item.quantity + 1 } 
+                : item
+        );
+        setCart(updatedCart);
         }
         Swal.fire({
             title: "Producto agregado al carrito",

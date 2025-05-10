@@ -14,7 +14,7 @@ export default function Cart() {
 // Función para crear la orden
 async function handleCheckout() {
     try {
-        if (!user) {
+        if (!user || !user._id) {
             Swal.fire({
                 title: "Acceso requerido",
                 text: "Debes iniciar sesión para finalizar la compra",
@@ -38,6 +38,10 @@ async function handleCheckout() {
 
         // Obtener el token (desde localStorage o sessionStorage)
         const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+		if(!token) {
+			logout();
+			throw new Error("Token no encontrado");
+		}
 
         // Enviar solicitud al backend
         const { data } = await axios.post("/api/orders", orderData, {
