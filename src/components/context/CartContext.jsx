@@ -29,7 +29,19 @@ export default function CartProvider({ children }) {
         localStorage.setItem("cart", JSON.stringify(cart));
     }, [cart]);
 
+    useEffect(() => {
+    const storedCart = localStorage.getItem("cart");
+    if (storedCart) {
+        const parsedCart = JSON.parse(storedCart);
+        // Filtrar productos con _id válidos
+        const validCart = parsedCart.filter(
+            (item) => item._id && typeof item._id === "string"
+        );
+        setCart(validCart);
+    }
+}, []);
 
+    // Actualizar el contador y el total cada vez que cambie el carrito
     useEffect(() => {
 
         let contador = 0;
@@ -55,6 +67,17 @@ export default function CartProvider({ children }) {
 
         // Verificar si el producto ya está en el carrito
         const productInCart = cart.find((item) => item._id === product._id);
+
+        if(!product._id || typeof product._id !== "string") {
+            Swal.fire({
+                title: "Error",
+                text: "El producto no tiene un ID válido.",
+                icon: "error",
+                theme: "dark",
+                confirmButtonColor:"orange"
+            })
+            return;
+        }
 
         if(!productInCart) {
             product.quantity = 1; // Si no está, le asigno la cantidad 1
