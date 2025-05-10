@@ -11,9 +11,11 @@ const URL = import.meta.env.VITE_API_URL;
 export default function AdminUser({ users, setUsers }) {
     const { user: currentUser, logout } = useAuth();
     const [editUser, setEditUser] = useState(null);
+    const [avatarFile, setAvatarFile] = useState(null);
 
+    
     const {
-            register,
+        register,
             handleSubmit,
             setValue,
             reset,
@@ -22,7 +24,7 @@ export default function AdminUser({ users, setUsers }) {
         } = useForm({
             mode: "onChange", // Valida mientras escribe el usuario
         });
-
+        
         const getAuthHeaders = () => {
             return {
                 headers: {
@@ -30,7 +32,11 @@ export default function AdminUser({ users, setUsers }) {
                 }
             }
         }
-    
+        
+        // Función para manejar el cambio de archivo
+        const handleFileChange = (e) => {
+            setAvatarFile(e.target.files[0]);
+        };  
 
     useEffect(() => {
 		getUsers();
@@ -79,12 +85,24 @@ export default function AdminUser({ users, setUsers }) {
 
     async function addUser(userData) {
         try {
+            const formData = new FormData();
+
+            formData.append("name", userData.name);
+            formData.append("email", userData.email);
+            formData.append("role", userData.role);
+            if(userData.password) formData.append("password", userData.password);
+            if(avatarFile) formData.append("avatar", avatarFile);   
+
             if(editUser) {
                 const response = await axios.put(
                     `${URL}/users/${editUser._id}`,
-                    userData,
-                    getAuthHeaders()
-                );
+                    formData,
+                    {
+                        ...getAuthHeaders(),
+                        headers: {
+                            "Content-Type": "multipart/form-data"
+                        }
+                    })
 
                 setUsers(prevUsers => {
                     prevUsers.map(user =>
@@ -167,7 +185,7 @@ export default function AdminUser({ users, setUsers }) {
     return (
         <>
             <main className="main-admin-user-container">
-                <form className="admin-form" id="form" onSubmit={handleSubmit(addUser)}>
+                <form className="admin-form" id="form" onSubmit={handleSubmit(addUser)} encType='multipart/form-data'>
                     <div className="input-group">
                         <label htmlFor="name">Nombre del usuario</label>
                         <input type="text" {...register("name", {
@@ -215,6 +233,17 @@ export default function AdminUser({ users, setUsers }) {
 						)}
                     </div>
                     <div className="input-group">
+                        <label htmlFor="role">Rol</label>
+                        <select 
+                            {...register("role", { required: "Se requiere un rol" })}
+                            id="role"
+                            defaultValue="user"
+                        >
+                            <option value="user">Usuario</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                    </div>
+                    <div className="input-group">
                         <label htmlFor="password">Contraseña</label>
                         <input type="password" {...register("password", {
                             required: "Se requiere una contraseña",
@@ -240,9 +269,10 @@ export default function AdminUser({ users, setUsers }) {
                     </div>
                     <div className="input-group">
 						<label htmlFor="avatar">Foto de perfil</label>
-						<input type="url" {...register("avatar", {
+						<input type="file" {...register("avatar", {
 							required: "Se requiere una foto de perfil."
 						})}
+                        onChange={handleFileChange}
 						id="avatar"
 						placeholder="URL de la imagen" 
                         />
@@ -259,6 +289,7 @@ export default function AdminUser({ users, setUsers }) {
                                 <th>AVATAR</th>
                                 <th>NOMBRE</th>
                                 <th>CORREO</th>
+                                <th>ROL</th>
                                 <th>FECHA DE CREACION</th>
                             </tr>
                         </thead>

@@ -21,6 +21,13 @@ export default function UserRow({ user, updateUser, deleteUser }) {
                 <td className="email-cell">
                     {user.email}
                 </td>
+                <td className='role-cell'>
+                    {user.role === "admin" ? (
+                        <span className='admin'>Administrador</span>
+                    ) : (
+                        <span className='user'>Usuario</span>
+                    )}
+                </td>
                 <td className="creation-cell">
                     {new Date(user.createdAt).toLocaleDateString("es-ES")}
                 </td>
