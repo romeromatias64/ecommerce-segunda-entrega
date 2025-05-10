@@ -10,10 +10,10 @@ export function AuthProvider({ children }) {
 
     const login = (userData, token, rememberMe = false) => {
         if(rememberMe) {
-            localStorage.setItem("authToken", token);
+            localStorage.setItem("token", token);
             localStorage.setItem("userData", JSON.stringify(userData));
         } else {
-            sessionStorage.setItem("authToken", token);
+            sessionStorage.setItem("token", token);
             sessionStorage.setItem("userData", JSON.stringify(userData));
         }
         
@@ -21,7 +21,7 @@ export function AuthProvider({ children }) {
     };
 
     const logout = () => {
-        localStorage.removeItem("authToken");
+        localStorage.removeItem("token");
         localStorage.removeItem("userData");
         setUser(null);
     };
