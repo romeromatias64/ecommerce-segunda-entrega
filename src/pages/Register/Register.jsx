@@ -20,7 +20,6 @@ export default function Register({ users, setUsers }) {
 	const {
 		register,
 		handleSubmit,
-		reset,
 		watch,
 		formState: { errors, isValid },
 	} = useForm({
