@@ -33,21 +33,21 @@ export default function Cart() {
 								</tr>
 							) : (
 								cart.map((product) => (
-									<tr key={product.id}>
-										<td>{product.id}</td>
+									<tr key={product._id}>
+										<td>{product._id}</td>
 										<td>{product.name}</td>
 										<td>{formatNumber(product.price)}</td>
 										<td>
 											<div className="count-container">
 												<button
 													className="btn btn-count btn-minus"
-													onClick={() => decreaseQuantity(product.id)}>
+													onClick={() => decreaseQuantity(product._id)}>
 													<FontAwesomeIcon icon={faMinus} />
 												</button>
 												{product.quantity}
 												<button
 													className="btn btn-count btn-plus"
-													onClick={() => increaseQuantity(product.id)}>
+													onClick={() => increaseQuantity(product._id)}>
 													<FontAwesomeIcon icon={faPlus} />
 												</button>
 											</div>
