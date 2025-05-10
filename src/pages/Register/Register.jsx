@@ -7,11 +7,13 @@ import { useNavigate } from "react-router";
 import Footer from '../../components/Footer/Footer'
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+import { useAuth } from "../../components/context/AuthContext";
 
 
 const URL = import.meta.env.VITE_API_URL;
 
 export default function Register({ users, setUsers }) {
+	const { login } = useAuth();
 
 	const navigate = useNavigate(); // Hook para redirigir
 
@@ -125,15 +127,14 @@ export default function Register({ users, setUsers }) {
 				}
 			});
 
-			setUsers([...users, response.data]);
+			// Obtener los datos de la respuesta
+			const { user, token } = response.data;
+			
+			// Iniciar sesión automáticamente después de registrarse
+			login(user, token);
+			Swal.fire("Registro exitoso", "Bienvenido a Guitarras Fox!", "success")
 
-			reset();
-
-			Swal.fire(
-				"Registro exitoso",
-				"Te registraste correctamente en Guitarras Fox!",
-				"success"
-			).then(() => {
+			setUsers([...users, response.data]).then(() => {
 				navigate("/home");
 			});
 		} catch (error) {
