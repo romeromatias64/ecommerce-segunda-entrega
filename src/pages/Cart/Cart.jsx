@@ -51,7 +51,7 @@ export default function Cart() {
 
             // Verificar si la respuesta es un error inesperado
             if (response.status !== 201) {
-                throw new Error(`Código de estado inválido: ${response.status}`);
+                throw new Error(`Error inesperado: ${response.status}`);
             }
 
             // Validar estructura de la respuesta
@@ -62,7 +62,7 @@ export default function Cart() {
             // Mostrar confirmación
             Swal.fire({
                 title: "¡Orden creada!",
-                text: `ID de orden: ${response.data.order._id}`,
+                text: `Orden #${response.data.order._id} creada`,
                 icon: "success",
                 confirmButtonColor: "orange",
                 theme: "dark"
@@ -80,14 +80,7 @@ export default function Cart() {
 
         } catch (error) {
             // Manejar errores específicos del backend o de red
-            let errorMessage = "Error al crear la orden";
-            if (error.response) {
-                // Error con respuesta del backend
-                errorMessage = error.response.data?.message || error.response.statusText;
-            } else if (error.request) {
-                // Error de red (sin respuesta)
-                errorMessage = "No se pudo conectar al servidor";
-            }
+            const errorMessage = error.response?.data?.message || error.message;
 
             Swal.fire({
                 title: "Error",
