@@ -23,10 +23,11 @@ export default function Header() {
 			text: "¿Estás seguro de que quieres salir de tu cuenta?",
 			icon: "question",
 			showCancelButton: true,
-			confirmButtonColor: "var(--primary-color)",
+			confirmButtonColor: "#e8ab00",
 			cancelButtonColor: "#d33",
 			confirmButtonText: "Sí, cerrar sesión",
 			cancelButtonText: "Cancelar",
+			theme: "dark"
 		});
 
 		if (result.isConfirmed) {
