@@ -87,7 +87,7 @@ export default function Register({ users, setUsers }) {
 		return new Promise((resolve) => {
 			canvas.toBlob((blob) => {
 				resolve(blob);
-			}, "image/jpeg", 0,95); // calidad al 95%
+			}, "image/jpeg")
 		});
 	};
 
