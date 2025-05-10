@@ -132,7 +132,14 @@ export default function Register({ users, setUsers }) {
 			
 			// Iniciar sesión automáticamente después de registrarse
 			login(user, token);
-			Swal.fire("Registro exitoso", "Bienvenido a Guitarras Fox!", "success")
+			Swal.fire({
+				title: "Registro exitoso",
+				text: "Te has registrado correctamente.",
+				icon: "success",
+				theme: "dark",
+				confirmButtonColor:"#e8ab00",
+				confirmButtonText: "Aceptar",
+			})
 
 			setUsers([...users, response.data])
 			navigate("/home");
