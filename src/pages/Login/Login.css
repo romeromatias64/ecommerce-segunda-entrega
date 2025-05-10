@@ -50,6 +50,68 @@
                 }
             }
 
+            .remember-me {
+                flex-direction: row !important;
+                align-items: center;
+                margin: 1rem 0;
+
+                .checkbox-container {
+                    display: flex;
+                    align-items: center;
+                    position: relative;
+                    cursor: pointer;
+                    user-select: none;
+                    color: rgba(241, 241, 241, 0.8);
+                    font-size: 1.1rem;
+                    padding-left: 35px;
+
+                    .checkbox-input {
+                        position: absolute;
+                        opacity: 0;
+                        cursor: pointer;
+                        height: 0;
+                        width: 0;
+
+                        &:checked~.checkmark {
+                            background-color: var(--main-color);
+                            border-color: var(--main-color);
+
+                            &:after {
+                                display: block;
+                            }
+                        }
+                    }
+
+                    .checkmark {
+                        position: absolute;
+                        left: 0;
+                        height: 25px;
+                        width: 25px;
+                        background-color: transparent;
+                        border: 2px solid var(--secondary-color);
+                        border-radius: 4px;
+                        transition: all 0.3s ease;
+
+                        &:after {
+                            content: "";
+                            position: absolute;
+                            display: none;
+                            left: 7px;
+                            top: 3px;
+                            width: 6px;
+                            height: 12px;
+                            border: solid white;
+                            border-width: 0 3px 3px 0;
+                            transform: rotate(45deg);
+                        }
+                    }
+
+                    &:hover .checkbox-input~.checkmark {
+                        border-color: var(--main-color);
+                    }
+                }
+            }
+
             .btn {
                 display: block;
                 width: 360px;

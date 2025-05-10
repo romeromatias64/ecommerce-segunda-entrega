@@ -8,15 +8,21 @@ export function AuthProvider({ children }) {
         return savedUser ? JSON.parse(savedUser) : null;
     });
 
-    const login = (userData, token) => {
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(userData));
+    const login = (userData, token, rememberMe = false) => {
+        if(rememberMe) {
+            localStorage.setItem("authToken", token);
+            localStorage.setItem("userData", JSON.stringify(userData));
+        } else {
+            sessionStorage.setItem("authToken", token);
+            sessionStorage.setItem("userData", JSON.stringify(userData));
+        }
+        
         setUser(userData);
     };
 
     const logout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("userData");
         setUser(null);
     };
 

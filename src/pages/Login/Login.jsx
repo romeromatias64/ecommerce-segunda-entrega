@@ -55,6 +55,17 @@ export default function Login() {
                             })} placeholder='Ingresa tu contraseña' />
                             {errors.password && <span className='error'>{errors.password.message}</span>}
                         </div>
+                        <div className="input-group remember-me">
+                                <label className="checkbox-container">
+                                    <input 
+                                        type="checkbox" 
+                                        {...register("rememberMe")} 
+                                        className="checkbox-input"
+                                    />
+                                    <span className="checkmark"></span>
+                                    Recordar mi cuenta
+                                </label>
+                            </div>
                         <button className='btn' type='submit'>Iniciar Sesión</button>
                     </form>
                 </div>
