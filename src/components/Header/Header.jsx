@@ -2,7 +2,7 @@ import React from "react";
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 
@@ -11,9 +11,15 @@ const URL = import.meta.env.VITE_API_URL
 export default function Header() {
 
 	const { cart, toggleCart } = useCart()
-	const { user } = useAuth()
+	const { user, logout } = useAuth()
+	const navigate = useNavigate()
 
 	const defaultAvatar = "https://www.utqiagvik.us/wp-content/uploads/2022/08/pngwing.com_.png"
+
+	const handleLogout = () => {
+		logout()
+		navigate("/home")
+	}
 
 	return (
         <>
@@ -102,12 +108,24 @@ export default function Header() {
 						alt={user ? user.name : "Invitado"}
 					/>
 					<ul className="nav-list submenu">
-						<li className="nav-item submenu-item">
-							<NavLink to="/register" className="nav-link">Registrarse</NavLink>
-						</li>
-						<li className="nav-item submenu-item">
-							<NavLink to="/login" className="nav-link">Iniciar sesión</NavLink>
-						</li>
+						{user ? (
+							// Solo mostrar cerrar sesión si hay un usuario autenticado
+							<li className="nav-item submenu-item">
+								<button className="nav-link" onClick={handleLogout}>
+									Cerrar sesión
+								</button>
+							</li>
+						) : (
+							// Mostrar opciones de registro e inicio de sesión si no hay un usuario autenticado
+							<>
+								<li className="nav-item submenu-item">
+									<NavLink to="/register" className="nav-link">Registrarse</NavLink>
+								</li>
+								<li className="nav-item submenu-item">
+									<NavLink to="/login" className="nav-link">Iniciar sesión</NavLink>
+								</li>
+							</>
+						)}
 					</ul>
 				</div>
 			</div>
