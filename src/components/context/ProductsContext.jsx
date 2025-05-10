@@ -20,12 +20,7 @@ export default function ProductsProvider({ children }) {
             console.log("Respuesta de la API: ", response.data)
             const products = response.data.products;
 
-            const productsWithFullImagePath = products.map(product => ({
-                ...product,
-                image: product.image ? `${URL}/uploads/products/${product.image.replace(/\\/g, '/')}` : null,
-            }));
-            
-            setProducts(productsWithFullImagePath);
+            setProducts(products);
         } catch (error) {
             console.log("Error al obtener los productos:", error);
             setProducts([]); // Establecer productos como vacío en caso de error
