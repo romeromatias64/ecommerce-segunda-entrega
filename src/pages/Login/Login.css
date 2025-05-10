@@ -74,7 +74,6 @@
     .main-container {
 
         .login-sect {
-            flex-direction: row;
             width: 60%;
             border: 1px solid var(--secondary-color);
             margin: 2rem auto;
