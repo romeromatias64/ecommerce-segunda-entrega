@@ -4,12 +4,12 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import UserRow from '../../components/UserRow/UserRow';
-import { useAuth, logout } from '../../components/context/AuthContext';
+import { useAuth } from '../../components/context/AuthContext';
 
 const URL = import.meta.env.VITE_API_URL;
 
 export default function AdminUser({ users, setUsers }) {
-    const { user  } = useAuth();
+    const { user: currentUser, logout  } = useAuth();
     const [editUser, setEditUser] = useState(null);
 
     const {
