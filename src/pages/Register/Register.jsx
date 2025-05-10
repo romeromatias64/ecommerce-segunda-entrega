@@ -27,7 +27,8 @@ export default function Register({ users, setUsers }) {
 
 	//? Preview del avatar
 	const [ previewSrc, setPreviewSrc ] = useState("");
-	const [ crop, setCrop ] = useState({ aspect: 1/1, width: 50, height: 50, x: 0, y: 0 });
+	const [ crop, setCrop ] = useState({ aspect: 1/1, width: 100, height: 100, x: 0, y: 0 });
+	const [ imgSize, setImsgSize ] = useState({ width: 0, height: 0 });
 	const imageRef = useRef(null)
 
 
@@ -39,6 +40,22 @@ export default function Register({ users, setUsers }) {
 			reader.readAsDataURL(e.target.files[0]);
 		}
 	};
+
+	// Funcion para ajustar el recorte inicial
+	const handleImageLoad = (img) => {
+		const { naturalWidth: width, naturalHeight: height } = img;
+		setImsgSize({ width, height });
+
+		// Calcular el recorte inicial centrado
+		const minDimension = Math.min(width, height);
+		setCrop({
+			aspect: 1/1,
+			width: (minDimension / width) * 100,
+			height: (minDimension / height) * 100,
+			x: (width - minDimension) / 2 / width * 100,
+			y: (height - minDimension) / 2 / height * 100,
+		});
+	}
 
 	// Funcion para obtener la imagen recortada
 	const getCroppedImage = () => {
@@ -250,12 +267,15 @@ export default function Register({ users, setUsers }) {
 										crop={crop}
 										onChange={(c) => setCrop(c)}
 										aspect={1}
+										ruleOfThirds
+										className="custom-react-crop"
 									>
 										<img
 											ref={imageRef}
 											src={previewSrc}
 											alt="Previsualización de la imagen"
-											style={{ maxWidth: "300px" }}
+											onload={(e) => handleImageLoad(e.currentTarget)}
+											style={{ maxWidth: "300px", maxHeight: "60vh", objectFit:"contain" }}
 										/>
 									</ReactCrop>
 								</div>

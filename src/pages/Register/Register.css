@@ -25,7 +25,7 @@
             align-items: center;
             border-radius: 4px;
             flex-grow: 1;
-            
+
             .inputs {
                 display: flex;
                 flex-direction: column;
@@ -38,7 +38,8 @@
                     color: rgba(241, 241, 241, 0.8);
                 }
 
-                input, select {
+                input,
+                select {
                     width: 360px;
                     background-color: var(--background-color);
                     border: 1px solid var(--secondary-color);
@@ -52,20 +53,29 @@
 
             .crop-container {
                 margin: 1rem 0;
-                border: 2px solid var(--secondary-color);
+                padding: 0;
                 border-radius: 4px;
                 padding: 1rem;
-                background: white;
+                background: transparent;
             }
 
             .ReactCrop__child-wrapper {
                 max-width: 100%;
             }
 
-            .ReactCrop__crop-selection {
+            .custom-react-crop .ReactCrop__crop-selection {
                 border: 2px solid var(--secondary-color);
-                box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
+                box-shadow: none !important;
 
+            }
+
+            .custom-react-crop .ReactCrop__drag-bar {
+                background: #4CAF50 !important;
+            }
+
+            .custom-react-crop .ReactCrop__drag-handle::after {
+                background: #4CAF50 !important;
+                border: 2px solid white;
             }
 
             .btn {
@@ -78,6 +88,7 @@
                 border-radius: 2px;
                 border: none;
                 font-size: 1.3rem;
+
                 &:hover {
                     background-color: #e8aa00bd;
                 }
@@ -88,31 +99,31 @@
 
 @media screen and (width > 768px) {
 
-.main-container {
+    .main-container {
 
-    .register-sect {
-        flex-direction: row;
-        width: 60%;
-        border: 1px solid var(--secondary-color);
-        margin: 2rem auto;
+        .register-sect {
+            flex-direction: row;
+            width: 60%;
+            border: 1px solid var(--secondary-color);
+            margin: 2rem auto;
 
-        .register-form {
+            .register-form {
 
-            .formulario {
-                .inputs {
-                    padding: 15px;
+                .formulario {
+                    .inputs {
+                        padding: 15px;
 
-                    label {
-                        font-size: 1.1rem;
+                        label {
+                            font-size: 1.1rem;
 
+                        }
+
+                        input {
+                            font-size: 1.3rem;
+                        }
                     }
-
-                    input {
-                        font-size: 1.3rem;
-                    }
-                }                  
+                }
             }
         }
     }
-}
 }
