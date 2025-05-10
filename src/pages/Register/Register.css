@@ -64,13 +64,13 @@
             }
 
             .custom-react-crop .ReactCrop__crop-selection {
-                border: 2px solid #4CAF50 !important;
+                border: 2px solid var(--main-color) !important;
                 box-shadow: none !important;
 
             }
 
             .custom-react-crop .ReactCrop__drag-bar {
-                background: #4CAF50 !important;
+                background: var(--main-color) !important;
                 width: 4px !important;
 
             }
@@ -78,7 +78,7 @@
             .custom-react-crop .ReactCrop__drag-handle {
                 width: 12px !important;
                 height: 12px !important;
-                background: #4CAF50 !important;
+                background: var(--main-color) !important;
                 border: 2px solid white !important;
             }
 

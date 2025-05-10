@@ -281,7 +281,7 @@ export default function Register({ users, setUsers }) {
 								</div>
 							)}
 							</div>
-							<button className="button" type="submit" disabled={!isValid}>
+							<button className="btn" type="submit" disabled={!isValid}>
 								REGISTRARSE
 							</button>
 						</form>
