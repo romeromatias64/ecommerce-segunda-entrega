@@ -7,14 +7,14 @@ const URL = import.meta.env.VITE_API_URL;
 
 export default function Product({ product }) {
 	const { addProduct } = useCart();
-	const [imageLoaded, setImageLoaded] = useState(false);
+	// const [imageLoaded, setImageLoaded] = useState(false);
 
-	useEffect(() => {
-		console.log("URL de la imagen: ", product.image);
-		const img = new Image();
-		img.src = product.image; // URL directa de S3
-		img.onload = () => setImageLoaded(true);
-	}, [product.image]);
+	// useEffect(() => {
+	// 	console.log("URL de la imagen: ", product.image);
+	// 	const img = new Image();
+	// 	img.src = product.image; // URL directa de S3
+	// 	img.onload = () => setImageLoaded(true);
+	// }, [product.image]);
 
 	function formatNumber(value) {
 		if (!value) return "";
@@ -27,28 +27,28 @@ export default function Product({ product }) {
 	return (
 		<>
 			<div className="card" key={product._id}>
-				<div style={{ display: imageLoaded ? "block" : "none" }}>
+				{/* <div style={{ display: imageLoaded ? "block" : "none" }}> */}
 					{product.discountPercentage > 0 && (
 						<span className="card-status sale">
 							-{product.discountPercentage}%
 						</span>
 					)}
-				</div>
+				{/* </div> */}
 				<Link to="/product-detail" className="card-link" state={{ product }} />
 				<div className="card-content">
 					<div className="img-container">
-						{!imageLoaded && (
+						{/* {!imageLoaded && (
 							<div className="skeleton-loader">
 								<div className="skeleton-image"></div>
 								<div className="skeleton-text"></div>
 								<div className="skeleton-text-short"></div>
 							</div>
-						)}
+						)} */}
 						<img
 							className="card-image"
 							src={product.image}
 							alt={product.name}
-							onLoad={() => setImageLoaded(true)}
+							// onLoad={() => setImageLoaded(true)}
 						/>
 					</div>
 				</div>
