@@ -10,6 +10,7 @@ export default function Product({ product }) {
 	const [imageLoaded, setImageLoaded] = useState(false);
 
 	useEffect(() => {
+		console.log("URL de la imagen: ", product.image);
 		const img = new Image();
 		img.src = product.image; // URL directa de S3
 		img.onload = () => setImageLoaded(true);
