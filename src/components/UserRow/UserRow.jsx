@@ -16,7 +16,7 @@ export default function UserRow({ user, updateUser, deleteUser }) {
                     {user.email}
                 </td>
                 <td className="creation-cell">
-                    {user.createdAt}
+                    {new Date(user.createdAt).toLocaleDateString("es-ES")}
                 </td>
                 <td className="tools-cell">
                     <div className="icon-container">

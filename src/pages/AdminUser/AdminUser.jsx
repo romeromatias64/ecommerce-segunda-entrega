@@ -4,23 +4,29 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import UserRow from '../../components/UserRow/UserRow';
+import { useAuth } from '../../context/AuthContext';
 
 const URL = import.meta.env.VITE_API_URL;
 
 export default function AdminUser({ users, setUsers }) {
-
+    const { user: currentUser } = useAuth();
     const [editUser, setEditUser] = useState(null);
 
     const {
             register,
             handleSubmit,
             setValue,
-            setFocus,
             reset,
             watch,
             formState: { errors, isValid },
         } = useForm({
             mode: "onChange", // Valida mientras escribe el usuario
+        });
+
+        const getAuthHeaders = () => ({
+            headers: {
+                Authorization: `Bearer ${currentUser?.token}`,
+            }
         });
     
 
@@ -30,12 +36,22 @@ export default function AdminUser({ users, setUsers }) {
 
     async function getUsers() {
 		try {
-			const response = await axios.get(`${URL}/users`);
-			const data = response.data.users;
-            console.log(data)
-			setUsers(data)
+			const response = await axios.get(`${URL}/users`, getAuthHeaders());
+
+            if(!response.data?.users) {
+                setUsers([]);
+                throw new Error("Formato de respuesta inesperado");
+            }
+			setUsers(response.data.users);
 		} catch (error) {
 			console.log("Error al obtener los usuarios: ", error);
+            Swal.fire({
+                title: "Error",
+                text: "No se pudieron cargar los usuarios",
+                icon: "error",
+                theme: "dark"
+            });
+            setUsers([])
 		}
 	}
 
@@ -53,77 +69,40 @@ export default function AdminUser({ users, setUsers }) {
     }, [editUser])
 
     async function addUser(data) {
-        if(editUser) {
-            const id = editUser._id;
+        try {
+            if(editUser) {
+                const response = await axios.put(
+                    `${URL}/users/${editUser._id}`,
+                    data,
+                    getAuthHeaders()
+                );
 
-            const userToUpdate = {
-                name: data.name,
-                avatar: data.avatar,
-                email: data.email
-            };
+                const usersCopy = [...users];
+                const index = usersCopy.findIndex(u => u._id === editUser._id);
+                usersCopy[index] = response.data;
+                setUsers(usersCopy);
 
-            const response = await axios.put(`${URL}/users/${id}`, userToUpdate);
-
-            const usersCopy = [...users];
-            const index = usersCopy.findIndex((user) => user._id === id);
-            usersCopy[index] = response.data;
-
-            setUsers(usersCopy);
-
-            setEditUser(null);
-
-            Swal.fire({
-                title: "Usuario actualizado",
-                text: "El usuario se editó correctamente",
-                icon: "success",
-                theme: "dark"
-
-            }
-            );
-        } else {
-            
-            const newUser = {
-                name: data.name,
-                avatar: data.avatar,
-                email: data.email,
-                password: data.password,
-                createdAt: new Date().toLocaleString("es-ES", {
-                    year: "2-digit",
-                    month: "2-digit",
-                    day: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    second: "2-digit"
-                }),
-            };
-    
-            try {
-                const response = await axios.post(`${URL}/users`, newUser);
-    
+                Swal.fire("Usuario actualizado!", "", "success");
+            } else {
+                const response = await axios.post(
+                    `${URL}/users`,
+                    data,
+                    getAuthHeaders()
+                );
+                
                 setUsers([...users, response.data.user]);
-    
-                reset();
-    
-                Swal.fire({
-                    title: "Usuario creado",
-                    text: "Se creó el nuevo usuario correctamente",
-                    icon: "success",
-                    theme: "dark"
-                }
-                );
-
-                setFocus("name");
-            } catch (error) {
-                console.error("Error al registrar el usuario: ", error);
-    
-                Swal.fire({
-                    title: "Error",
-                    text: "Hubo un problema al registrarte. Intentalo nuevamente",
-                    icon: "error",
-                    theme: "dark"
-                }
-                );
+                Swal.fire("Usuario creado!", "", "success");
             }
+            
+            setEditUser(null);
+            reset();
+        } catch (error) {
+            console.error("Error:", error);
+            Swal.fire({
+                title: "Error",
+                text: error.response?.data?.message || "Error en la operación",
+                icon: "error"
+            });
         }
 	}
 
