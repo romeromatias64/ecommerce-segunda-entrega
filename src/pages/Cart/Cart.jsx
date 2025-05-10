@@ -149,7 +149,7 @@ async function handleCheckout() {
 				</div>
 
 				<div className="cart-buttons">
-					<button className="btn" onClick={handleCheckout()}>Finalizar Compra</button>
+					<button className="btn" onClick={handleCheckout}>Finalizar Compra</button>
 					<button
 						className="btn"
 						onClick={() => {
