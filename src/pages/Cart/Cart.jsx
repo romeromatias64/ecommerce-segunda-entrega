@@ -3,11 +3,80 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./Cart.css";
 import Swal from "sweetalert2";
+import { useAuth } from "../../components/context/AuthContext";
+import axios from "axios";
 
 export default function Cart() {
 	const { cart, total, removeProduct, clearCart, increaseQuantity, decreaseQuantity, formatNumber } = useCart();
 
-	
+	const { user, logout } = useAuth(); // Obtener usuario y token
+
+// Función para crear la orden
+async function handleCheckout() {
+    try {
+        if (!user) {
+            Swal.fire({
+                title: "Acceso requerido",
+                text: "Debes iniciar sesión para finalizar la compra",
+                icon: "warning",
+                confirmButtonColor: "orange",
+                theme: "dark"
+            });
+            return;
+        }
+
+        // Preparar datos de la orden
+        const orderData = {
+            user: user._id,
+            products: cart.map(product => ({
+                product: product._id,
+                quantity: product.quantity,
+                price: product.price
+            })),
+            total: total
+        };
+
+        // Obtener el token (desde localStorage o sessionStorage)
+        const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+
+        // Enviar solicitud al backend
+        const { data } = await axios.post("/api/orders", orderData, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        // Éxito: Mostrar confirmación y vaciar carrito
+        Swal.fire({
+            title: "¡Orden creada!",
+            text: `ID de orden: ${data.order._id}`,
+            icon: "success",
+            confirmButtonColor: "orange",
+            theme: "dark"
+        });
+        clearCart();
+
+        const ordersResponse = await axios.get("/api/orders", {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        
+        console.log("Órdenes actualizadas:", ordersResponse.data);
+
+    } catch (error) {
+        const message = error.response?.data?.message || "Error al crear la orden";
+        Swal.fire({
+            title: "Error",
+            text: message,
+            icon: "error",
+            theme: "dark"
+        });
+
+        // Cerrar sesión si el token es inválido
+        if (error.response?.status === 401) logout();
+    }
+}
 
 
 	return (
@@ -76,7 +145,7 @@ export default function Cart() {
 				</div>
 
 				<div className="cart-buttons">
-					<button className="btn">Finalizar Compra</button>
+					<button className="btn" onClick={handleCheckout()}>Finalizar Compra</button>
 					<button
 						className="btn"
 						onClick={() => {
