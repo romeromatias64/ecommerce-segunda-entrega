@@ -4,12 +4,12 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import UserRow from '../../components/UserRow/UserRow';
-import { useAuth } from '../../components/context/AuthContext';
+import { useAuth, logout } from '../../components/context/AuthContext';
 
 const URL = import.meta.env.VITE_API_URL;
 
 export default function AdminUser({ users, setUsers }) {
-    const { user: currentUser } = useAuth();
+    const { user  } = useAuth();
     const [editUser, setEditUser] = useState(null);
 
     const {
@@ -23,11 +23,14 @@ export default function AdminUser({ users, setUsers }) {
             mode: "onChange", // Valida mientras escribe el usuario
         });
 
-        const getAuthHeaders = () => ({
-            headers: {
-                Authorization: `Bearer ${currentUser?.token}`,
+        const getAuthHeaders = () => {
+            const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+            return {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
             }
-        });
+        }
     
 
     useEffect(() => {
@@ -44,14 +47,20 @@ export default function AdminUser({ users, setUsers }) {
             }
 			setUsers(response.data.users);
 		} catch (error) {
-			console.log("Error al obtener los usuarios: ", error);
-            Swal.fire({
-                title: "Error",
-                text: "No se pudieron cargar los usuarios",
-                icon: "error",
-                theme: "dark"
-            });
-            setUsers([])
+            if(error.response?.status === 401) {
+                Swal.fire("Sesión expirada", "Inicia sesión nuevamente", "error");
+                logout();
+                window.location.href = "/login";
+            } else {
+                console.log("Error al obtener los usuarios: ", error);
+                Swal.fire({
+                    title: "Error",
+                    text: "No se pudieron cargar los usuarios",
+                    icon: "error",
+                    theme: "dark"
+                });
+                setUsers([])
+            }
 		}
 	}
 

@@ -9,6 +9,10 @@ export function AuthProvider({ children }) {
     });
 
     const login = (userData, token, rememberMe = false) => {
+
+        const userWithToken = { ...userData, token}
+        setUser(userWithToken);
+
         if(rememberMe) {
             localStorage.setItem("token", token);
             localStorage.setItem("userData", JSON.stringify(userData));
@@ -17,7 +21,6 @@ export function AuthProvider({ children }) {
             sessionStorage.setItem("userData", JSON.stringify(userData));
         }
         
-        setUser(userData);
     };
 
     const logout = () => {
