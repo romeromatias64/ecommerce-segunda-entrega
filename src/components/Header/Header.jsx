@@ -22,6 +22,7 @@ export default function Header() {
 		Swal.fire({
 			title: "Sesión cerrada",
 			text: "Has cerrado sesión correctamente",
+			theme: "dark"
 		})
 		navigate("/home")
 	}
