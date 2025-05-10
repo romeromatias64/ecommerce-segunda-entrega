@@ -74,8 +74,12 @@ async function handleCheckout() {
 
     } catch (error) {
         const message = error.response?.data?.message || "Error al crear la orden";
-		console.error(message);
-
+        Swal.fire({
+            title: "Error",
+            text: message,
+            icon: "error"
+        });
+		
         // Cerrar sesión si el token es inválido
         if (error.response?.status === 401) logout();	
     }
