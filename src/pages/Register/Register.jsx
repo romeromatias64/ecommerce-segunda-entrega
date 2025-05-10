@@ -134,9 +134,8 @@ export default function Register({ users, setUsers }) {
 			login(user, token);
 			Swal.fire("Registro exitoso", "Bienvenido a Guitarras Fox!", "success")
 
-			setUsers([...users, response.data]).then(() => {
-				navigate("/home");
-			});
+			setUsers([...users, response.data])
+			navigate("/home");
 		} catch (error) {
 			let errorMessage = "Hubo un problema al registrarte. Intentalo de nuevo"
 
@@ -275,7 +274,7 @@ export default function Register({ users, setUsers }) {
 											ref={imageRef}
 											src={previewSrc}
 											alt="Previsualización de la imagen"
-											onload={(e) => handleImageLoad(e.currentTarget)}
+											onLoad={(e) => handleImageLoad(e.currentTarget)}
 											style={{ maxWidth: "300px", maxHeight: "60vh", objectFit:"contain" }}
 										/>
 									</ReactCrop>
