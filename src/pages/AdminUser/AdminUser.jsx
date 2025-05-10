@@ -125,7 +125,7 @@ export default function AdminUser({ users, setUsers }) {
 				theme: "dark"
 			}).then(async (result) => {
 				if (result.isConfirmed) {
-					await axios.delete(`${URL}/users/${id}`);
+					await axios.delete(`${URL}/users/${id}`, getAuthHeaders());
 
 					const usersWithoutDeleted = users.filter(
 						(user) => user._id !== id
