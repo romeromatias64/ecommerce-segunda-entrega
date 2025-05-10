@@ -41,6 +41,8 @@ export default function Cart() {
 				return;
 			}
 
+			console.log("Contenido del carrito:", cart);
+
 			// Preparar datos de la orden
 			const orderData = {
 				user: user._id,
@@ -62,6 +64,28 @@ export default function Cart() {
 				throw new Error("Token no encontrado");
 			}
 
+			if (cart.length === 0) {
+				Swal.fire({
+					title: "Carrito vacío",
+					text: "No puedes finalizar la compra con un carrito vacío.",
+					icon: "warning",
+					confirmButtonColor: "orange",
+					theme: "dark",
+				});
+				return;
+			}
+
+			if (total <= 0) {
+				Swal.fire({
+					title: "Total inválido",
+					text: "El total de la orden debe ser mayor a 0.",
+					icon: "warning",
+					confirmButtonColor: "orange",
+					theme: "dark",
+				});
+				return;
+			}
+
 			// Enviar solicitud al backend
 			const response = await axios.post("/api/orders", orderData, {
 				headers: {
@@ -69,14 +93,15 @@ export default function Cart() {
 				},
 			});
 
+			console.log("Respuesta del backend:", response.data);
+
+			if(!response.data.order?._id) {
+				throw new Error("La orden no se creó correctamente");
+			}
+
 			// Verificar si la respuesta es un error inesperado
 			if (response.status !== 201) {
 				throw new Error(`Error inesperado: ${response.status}`);
-			}
-
-			// Validar estructura de la respuesta
-			if (!response.data.order?._id) {
-				throw new Error("La orden no se creó correctamente");
 			}
 
 			// Mostrar confirmación
@@ -90,7 +115,6 @@ export default function Cart() {
 
 			clearCart();
 
-			// Opcional: Obtener órdenes actualizadas
 			const ordersResponse = await axios.get("/api/orders", {
 				headers: {
 					Authorization: `Bearer ${token}`,
