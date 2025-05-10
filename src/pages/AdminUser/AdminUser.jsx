@@ -24,7 +24,7 @@ export default function AdminUser({ users, setUsers }) {
         });
 
         const getAuthHeaders = () => {
-            const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+            // const token = localStorage.getItem("token") || sessionStorage.getItem("token");
             return {
                 headers: {
                     Authorization: `Bearer ${currentUser?.token}`,
