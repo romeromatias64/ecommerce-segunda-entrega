@@ -113,6 +113,11 @@
         text-align: center;
     }
 
+    .role-cell {
+        text-align: center;
+        font-weight: 500;
+    }
+
     .tools-cell {
         .icon-container {
             display: flex;
