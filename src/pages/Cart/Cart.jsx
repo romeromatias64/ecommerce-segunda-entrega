@@ -6,6 +6,8 @@ import Swal from "sweetalert2";
 import { useAuth } from "../../components/context/AuthContext";
 import axios from "axios";
 
+const URL = import.meta.env.VITE_API_URL;
+
 export default function Cart() {
 	const {
 		cart,
@@ -87,7 +89,7 @@ export default function Cart() {
 			}
 
 			// Enviar solicitud al backend
-			const response = await axios.post("/api/orders", orderData, {
+			const response = await axios.post(`${URL}/orders`, orderData, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
@@ -115,7 +117,7 @@ export default function Cart() {
 
 			clearCart();
 
-			const ordersResponse = await axios.get("/api/orders", {
+			const ordersResponse = await axios.get(`${URL}/orders`, {
 				headers: {
 					Authorization: `Bearer ${token}`,
 				},
