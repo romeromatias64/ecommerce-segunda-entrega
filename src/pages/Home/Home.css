@@ -1,3 +1,7 @@
+body {
+    overflow-x: hidden;
+}
+
 .main-container {
     flex-grow: 1;
 
@@ -174,7 +178,7 @@
         }
 
         .info-sect {
-            width: 100vw;
+            width: 100%;
             height: 60vh;
 
             .info {
